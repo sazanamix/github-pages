@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#e9e7e1;font-family:'Noto Sans JP',system-ui,sans-serif;color:#1c1b18;-webkit-font-smoothing:antialiased}
+  a{color:#0f6d5f;text-decoration:none}
+  a:hover{color:#0a4d43;text-decoration:underline}
+  *{box-sizing:border-box}
+</style>
+</helmet>
+<div style="max-width:1180px;margin:0 auto;padding:56px 40px 96px">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;border-bottom:3px solid #1c1b18;padding-bottom:20px;margin-bottom:8px">
+    <div>
+      <div style="font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#0f6d5f;text-transform:uppercase;margin-bottom:14px">Tool Evaluation · 2026</div>
+      <h1 style="margin:0;font-weight:900;font-size:40px;line-height:1.1;letter-spacing:-.01em">UWSC 後継ツール 比較検討</h1>
+      <p style="margin:12px 0 0;font-size:15px;color:#55524b;max-width:640px">Windows 操作自動化の乗り換え先を、実務観点で横並び比較。開発停止した UWSC の資産をどう活かすかを軸に整理しました。</p>
+    </div>
+    <div style="text-align:right;font:500 12px/1.7 'JetBrains Mono',monospace;color:#7a766c;white-space:nowrap">
+      検討日 2026-07-17<br>候補 4 件<br>推奨 UWSCR
+    </div>
+  </div>
+
+  <!-- Recommendation callout -->
+  <div style="margin:36px 0 40px;background:#0f6d5f;color:#f3f1ea;border-radius:14px;padding:30px 34px;box-shadow:0 8px 30px rgba(15,109,95,.28)">
+    <div style="font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase;opacity:.8;margin-bottom:12px">Claude のおすすめ</div>
+    <div style="display:grid;grid-template-columns:auto 1px 1fr;gap:28px;align-items:center">
+      <div>
+        <div style="font-weight:900;font-size:30px;line-height:1">UWSCR</div>
+        <div style="font-size:13px;opacity:.85;margin-top:4px">最有力の第一候補</div>
+      </div>
+      <div style="background:rgba(255,255,255,.25);height:64px"></div>
+      <div style="font-size:14.5px;line-height:1.7">
+        既存の UWSC スクリプト資産を最小の書き換えで活かせて、無料・単一 exe・インストール不要と UWSC の使い勝手をそのまま継承。日常的な Windows 自動化なら第一候補です。ただし <strong style="color:#fff">Excel 中心の業務効率化や全社的な RPA・ガバナンスが必要なら Power Automate</strong>、<strong style="color:#fff">複雑なロジックや長期保守を重視するなら Python</strong> が適します。用途で使い分けるのが結論です。
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison table -->
+  <div style="background:#fbfaf6;border:1px solid #d5d2c8;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="background:#1c1b18;color:#f3f1ea">
+          <th style="text-align:left;padding:16px 18px;font-weight:700;width:150px;font-size:12px;letter-spacing:.03em">比較項目</th>
+          <th style="text-align:left;padding:16px 16px;font-weight:700;position:relative">UWSCR<div style="font:600 10px/1 'JetBrains Mono',monospace;color:#7fd8c8;margin-top:5px">推奨</div></th>
+          <th style="text-align:left;padding:16px 16px;font-weight:700">AutoHotkey v2</th>
+          <th style="text-align:left;padding:16px 16px;font-weight:700">Power Automate<div style="font:400 10px/1 'JetBrains Mono',monospace;color:#b8b4a8;margin-top:5px">for desktop</div></th>
+          <th style="text-align:left;padding:16px 16px;font-weight:700;color:#b8b4a8">Python <span style="font-weight:400;font-size:10px">(参考)</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <sc-for list="{{ rows }}" as="r" hint-placeholder-count="11">
+          <tr style="{{ r.trStyle }}">
+            <td style="padding:13px 18px;font-weight:700;color:#1c1b18;vertical-align:top;border-right:1px solid #e6e3d9">{{ r.label }}</td>
+            <td style="padding:13px 16px;vertical-align:top;line-height:1.55;background:rgba(15,109,95,.045);border-right:1px solid #eeece3">{{ r.uwscr }}</td>
+            <td style="padding:13px 16px;vertical-align:top;line-height:1.55;border-right:1px solid #eeece3">{{ r.ahk }}</td>
+            <td style="padding:13px 16px;vertical-align:top;line-height:1.55;border-right:1px solid #eeece3">{{ r.pad }}</td>
+            <td style="padding:13px 16px;vertical-align:top;line-height:1.55;color:#55524b">{{ r.py }}</td>
+          </tr>
+        </sc-for>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Scenario guide -->
+  <h2 style="margin:52px 0 20px;font-weight:900;font-size:22px;letter-spacing:-.01em">用途別のおすすめ</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+    <sc-for list="{{ scenarios }}" as="s" hint-placeholder-count="3">
+      <div style="background:#fbfaf6;border:1px solid #d5d2c8;border-top:4px solid #0f6d5f;border-radius:11px;padding:22px 22px 24px">
+        <div style="font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#0f6d5f;text-transform:uppercase;margin-bottom:10px">{{ s.tag }}</div>
+        <div style="font-weight:700;font-size:16px;margin-bottom:8px;line-height:1.35">{{ s.title }}</div>
+        <p style="margin:0 0 14px;font-size:13px;line-height:1.65;color:#55524b">{{ s.body }}</p>
+        <div style="display:inline-block;background:#1c1b18;color:#f3f1ea;font-weight:700;font-size:12px;padding:6px 12px;border-radius:6px">→ {{ s.pick }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- Notes -->
+  <h2 style="margin:52px 0 18px;font-weight:900;font-size:22px;letter-spacing:-.01em">補足メモ</h2>
+  <ul style="margin:0;padding-left:22px;font-size:13.5px;line-height:1.85;color:#3a3833;max-width:900px">
+    <li><strong>UWSCR は「正式な後継」ではありません。</strong>UWSC 作者とは無関係に、動作を模倣して一から開発された互換ツールです。構文は寄せていますが完全一致は保証されず、資産の移行時は動作検証が必要です。</li>
+    <li><strong>UWSC 本体は 2017 年で更新停止。</strong>本体自体は今も動きますが、CDO メール送信など周辺の前提が古く、現行環境で動かない例が増えています。急いで乗り換える必要がなければ使い続けても構いませんが、ブラウザ操作など不都合が出たら移行の合図です。</li>
+    <li><strong>配布のしやすさは実務で効きます。</strong>UWSCR / AHK / Python はスクリプト（テキスト）配布が容易。Power Automate はフローの export/import やアカウント連携に制約があり、配布は相対的に手間です。</li>
+    <li>この表は 2026 年 7 月時点の一般的な評価です。最終判断の前に、実際の対象業務（ブラウザ操作の有無、Excel 依存度、社内ガバナンス要件）で PoC することをおすすめします。</li>
+  </ul>
+
+  <div style="margin-top:40px;padding-top:18px;border-top:1px solid #d5d2c8;font:500 11px/1.6 'JetBrains Mono',monospace;color:#8a877d">
+    UWSC 後継ツール比較検討資料 · 出典: UWSCR 公式 (stuncloud/UWSCR)、各ツール公開情報、実務レビュー記事
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const alt = "background:#f4f2ec;";
+    const wht = "background:transparent;";
+    const rows = [
+      { label:"種別", uwscr:"スクリプト実行ツール（UWSC互換）", ahk:"スクリプト言語／自動化ツール", pad:"RPA（ローコード＋一部コード）", py:"汎用プログラミング言語＋ライブラリ" },
+      { label:"費用", uwscr:"無料（MITライセンス）", ahk:"無料（オープンソース）", pad:"Windows標準搭載で基本無料。クラウド機能や有人/無人実行は有料プラン", py:"無料（オープンソース）" },
+      { label:"動作環境", uwscr:"Windows。単一exe・インストール不要（ZIP展開のみ）", ahk:"Windows。要インストール", pad:"Windows 10/11標準。Microsoftアカウント連携前提", py:"Windows/Mac/Linux。要インストール＋環境構築" },
+      { label:"UWSC資産の活用", uwscr:"◎ 構文を寄せており最小の書き換えで移行可。最有力の理由", ahk:"× 別言語のため全面的に書き直し", pad:"× 作り直し（GUIでフロー再構築）", py:"× 書き直し。ただしロジックは移植しやすい" },
+      { label:"学習コスト", uwscr:"低（UWSC経験者ならほぼそのまま）", ahk:"中（独自構文・英語情報中心）", pad:"低〜中（ノーコードで着手しやすい）", py:"中〜高（プログラミング必須）" },
+      { label:"ブラウザ操作", uwscr:"◯ Edge対応が強化。HTTP/JSONも扱える", ahk:"△ 画像認識中心。標準では弱め", pad:"◎ ブラウザ拡張でDOM操作。得意分野", py:"◎ Selenium/Playwrightで堅牢に自動化" },
+      { label:"Excel/Office連携", uwscr:"△ 可能だが大規模業務向きではない", ahk:"△ COM経由で可能だが手間", pad:"◎ Office 365と親和性が高い", py:"◎ openpyxl等で高度に処理可能" },
+      { label:"配布のしやすさ", uwscr:"◎ exe＋スクリプトを渡すだけ", ahk:"◎ スクリプト配布容易。exe化も可", pad:"△ フローのexport/import・アカウントに制約", py:"◯ スクリプト配布可。環境依存に注意" },
+      { label:"開発・保守状況", uwscr:"◎ 活発に開発中（Rust製・高速）", ahk:"◎ 老舗で安定。大規模コミュニティ", pad:"◎ Microsoftが継続開発", py:"◎ エコシステム最大・長期的に安心" },
+      { label:"日本語情報", uwscr:"◯ UWSC由来で日本語圏に一定の蓄積", ahk:"△ 英語が中心", pad:"◎ 公式・記事とも豊富", py:"◎ 非常に豊富" },
+      { label:"向いている人", uwscr:"UWSC資産を活かし軽い日常自動化をしたい個人・小規模", ahk:"キーボード/ウィンドウ操作を極めたい上級者", pad:"全社導入・ガバナンス・Office業務が中心の組織", py:"複雑なロジックと長期保守を重視する開発志向の人" },
+    ];
+    let i = 0;
+    const withStyle = rows.map(r => ({ ...r, trStyle: (i++ % 2 ? alt : wht) + "border-top:1px solid #e6e3d9" }));
+
+    const scenarios = [
+      { tag:"Case A", title:"既存のUWSC資産を活かしたい", body:"これまで書きためたUWSCスクリプトを捨てずに、軽い日常自動化を続けたい。無料・軽量・すぐ起動を重視。", pick:"UWSCR" },
+      { tag:"Case B", title:"会社全体でRPAを回したい", body:"Excel・Office業務が中心で、非エンジニアも含めた運用や社内ガバナンス・監査対応が必要。", pick:"Power Automate" },
+      { tag:"Case C", title:"複雑な処理を長く保守したい", body:"分岐やAPI連携が多く、コードで全体を把握したい。将来にわたって拡張・保守していく前提。", pick:"Python" },
+    ];
+
+    return { rows: withStyle, scenarios };
+  }
+}
+</script>
+</body>
+</html>

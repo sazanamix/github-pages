@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:#faf9f7;color:#1a1a1a;font-family:'Noto Sans JP',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{height:12px;width:12px}
+::-webkit-scrollbar-thumb{background:#d8d6d1;border-radius:6px;border:3px solid #faf9f7}
+::-webkit-scrollbar-track{background:transparent}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;padding:32px 36px 0">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:22px">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#9a958c;text-transform:uppercase;margin-bottom:8px">Agentic AI Coding Tools · Comparison Matrix</div>
+      <h1 style="margin:0;font-size:30px;font-weight:700;letter-spacing:-.01em">コード生成エージェント型AI 比較一覧</h1>
+      <p style="margin:8px 0 0;font-size:13px;color:#6b665e;line-height:1.6;max-width:760px">主要7ツールを社内エンジニア向けに9軸で横断比較。料金・仕様・モデルは変動が速いため、導入判断時は各社公式ページで最新値の確認を推奨。</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;font-size:11.5px;color:#6b665e;font-family:'IBM Plex Mono',monospace">
+      <div>更新: 2026-07-17 時点</div>
+      <div>自律性: ★=段階（★5=完全自律）</div>
+    </div>
+  </div>
+
+  <div style="flex:1;overflow:auto;border:1px solid #e6e3dd;border-radius:10px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.03)">
+    <div style="display:grid;grid-template-columns:172px repeat(7,232px);--pad:{{ pad }};--fs:{{ fs }};min-width:max-content">
+
+      <div style="position:sticky;top:0;left:0;z-index:4;background:#fff;border-bottom:2px solid #1a1a1a;border-right:1px solid #e6e3dd;padding:16px var(--pad,13px);font-size:11px;font-family:'IBM Plex Mono',monospace;color:#9a958c;letter-spacing:.08em;display:flex;align-items:flex-end">比較軸 ↓ / ツール →</div>
+      <sc-for list="{{ tools }}" as="t" hint-placeholder-count="7">
+        <div style="position:sticky;top:0;z-index:3;background:#fff;border-bottom:2px solid #1a1a1a;border-right:1px solid #f0eee9;padding:14px var(--pad,14px)">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px">
+            <span style="width:9px;height:9px;border-radius:50%;flex:none;background:{{ t.color }}"></span>
+            <span style="font-size:15px;font-weight:700;letter-spacing:-.01em">{{ t.name }}</span>
+          </div>
+          <div style="font-size:10.5px;font-family:'IBM Plex Mono',monospace;color:#8a857c;letter-spacing:.04em;margin-bottom:3px">{{ t.category }}</div>
+          <div style="font-size:11px;color:#7c776e;line-height:1.4">{{ t.maker }}</div>
+        </div>
+      </sc-for>
+
+      <sc-for list="{{ rows }}" as="r" hint-placeholder-count="9">
+        <div style="position:sticky;left:0;z-index:2;background:#f5f4f1;border-bottom:1px solid #ecebe6;border-right:1px solid #e6e3dd;padding:var(--pad,13px);display:flex;align-items:center">
+          <span style="font-size:12.5px;font-weight:700;line-height:1.45">{{ r.label }}</span>
+        </div>
+        <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="7">
+          <div style="border-bottom:1px solid #f0eee9;border-right:1px solid #f4f3ef;padding:var(--pad,13px);font-size:var(--fs,12.5px);line-height:1.6;color:#33302b;text-wrap:pretty">{{ c }}</div>
+        </sc-for>
+      </sc-for>
+
+    </div>
+  </div>
+
+  <div style="padding:14px 2px 26px;font-size:11px;color:#9a958c;line-height:1.6;font-family:'IBM Plex Mono',monospace">
+    出典: 各社公式・2026年の公開比較記事を統合。ベンチマーク値（SWE-bench Verified 等）は各社/第三者の報告値で測定条件により変動。価格は個人/チーム主要プランの目安（USD・税別）で従量課金は別途。
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1728,&quot;height&quot;:900},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;表示&quot;},&quot;colorAccents&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;表示&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const density = this.props.density ?? 'comfortable';
+    const accents = this.props.colorAccents ?? true;
+    const pad = density === 'compact' ? '9px 12px' : '13px 15px';
+    const fs = density === 'compact' ? '11.5px' : '12.5px';
+
+    const tools = [
+      { name: 'Claude Code', category: 'CLIエージェント', maker: 'Anthropic', color: 'oklch(0.62 0.11 45)' },
+      { name: 'Cursor', category: 'AI IDE', maker: 'Anysphere', color: 'oklch(0.6 0.1 255)' },
+      { name: 'GitHub Copilot', category: 'IDE拡張', maker: 'GitHub / MS', color: 'oklch(0.6 0.1 155)' },
+      { name: 'OpenAI Codex', category: 'CLI / クラウド', maker: 'OpenAI', color: 'oklch(0.6 0.09 195)' },
+      { name: 'Devin', category: '自律クラウド', maker: 'Cognition', color: 'oklch(0.58 0.11 305)' },
+      { name: 'Windsurf', category: 'AI IDE', maker: 'Cognition', color: 'oklch(0.6 0.1 225)' },
+      { name: 'Cline / Aider', category: 'OSS・BYOK', maker: 'オープンソース', color: 'oklch(0.58 0.03 60)' },
+    ];
+    if (!accents) tools.forEach(t => t.color = 'oklch(0.55 0.02 60)');
+
+    const rows = [
+      { label: '料金・プラン', cells: [
+        '個人 Pro $20/月／Max $100–200/月。従量API利用も可',
+        '無料／Pro $20／Pro+ $60／Ultra $200／Teams $40〜/席',
+        '無料／Pro $10／Pro+ $39／Business $19席／Enterprise $39席（+従量クレジット）',
+        'ChatGPT Plus $20／Pro $200 に同梱、API従量',
+        '無料／Pro $20〜／Teams $80/月〜（ACU従量）※旧$500プランは廃止',
+        '無料(25クレジット)／Pro $15／Teams $40/席',
+        'ツールは無料。モデルAPIの従量課金のみ（月$5〜数十）',
+      ]},
+      { label: '自律性（エージェント度）', cells: [
+        '★★★★★ 非常に高い。マルチステップ自走・サブエージェント並列実行',
+        '★★★★☆ 高い。Composerエージェント／並列エージェント／Cloud Agents',
+        '★★★☆☆ 中。補完中心＋Agent Mode・クラウドエージェントでPR自動化',
+        '★★★★☆ 高い。クラウドで非同期実行、スケジュール実行、PR作成',
+        '★★★★★ 最高。専用VMで完全自律、PR提出まで自走',
+        '★★★★☆ 高い。Cascade／並列エージェント、Devin連携',
+        '★★★☆☆ 中。plan/actループ・git連携（人の確認前提）',
+      ]},
+      { label: '得意なタスク', cells: [
+        '大規模リファクタ、レガシー移行、複数ファイルにまたがる複雑な変更、難バグ調査',
+        '日々の対話的コーディング、UI実装、素早い複数ファイル編集と補完',
+        'インライン補完、既存GitHub運用への統合、PRレビュー、幅広い日常補助',
+        '明確に定義したタスクの委任、バックグラウンド／長時間の非同期実行',
+        'スコープ明確なチケット、移行作業、依存更新、バックログ消化',
+        'コスパ重視のエージェントIDE、中〜大規模編集、評価導入のしやすさ',
+        'ロックイン回避、データ主権、CI自動化、モデルの自由選択',
+      ]},
+      { label: '対応言語・エコシステム', cells: [
+        '主要言語を広くカバー。MCP／Skills／Hooks／Subagents',
+        'VS Code同等の広範な拡張資産をほぼ流用、MCP対応',
+        'あらゆる主要言語。最大級のエコシステムと情報量',
+        '主要言語を広くカバー、AGENTS.md でコンテキスト付与',
+        'Web系中心に広くカバー。Windsurf買収でIDEを獲得',
+        'VS Code系エコシステム、Devin Cloud/CLI同梱',
+        '任意モデル・ローカルモデルも利用可、MCP対応',
+      ]},
+      { label: 'IDE／ターミナル統合', cells: [
+        'ターミナル中心＋VS Code／JetBrains拡張、Web版',
+        '専用IDE（VS Codeフォーク）',
+        'VS Code／JetBrains／Visual Studio／CLI／GitHub本体',
+        'CLI＋macOS/Windowsデスクトップ、クラウド、IDE拡張',
+        'Slack／GitHub連携、Web、Devin Desktop（IDE）',
+        '専用IDE、Devin Cloud/CLI同梱',
+        'Cline=VS Code拡張／Aider=ターミナル、git連携',
+      ]},
+      { label: '精度・ベンチマーク', cells: [
+        'SWE-bench Verified 報告値で最上位クラス（80%台後半）',
+        '内製Composer＋Claude/GPT/Gemini選択可、実務評価が高い',
+        'モデル選択制（Claude/GPT/Gemini等）で用途により変動',
+        'SWE-bench等で高スコア報告（GPT-5系）',
+        '単独スコアは控えめ。明確タスクで実用、曖昧な要件に弱い',
+        '内製SWE-1.5系等、実務には十分',
+        '使用モデル次第（フロンティアモデルを自由選択）',
+      ]},
+      { label: '日本語対応', cells: [
+        '指示・コメントは日本語OK（UIは英語主体）',
+        'チャット・指示は日本語で問題なし（UI日本語化は限定的）',
+        '対応良好。最も普及し日本語の情報も豊富',
+        '対応良好',
+        '指示は日本語可（UIは英語）',
+        '指示は日本語可',
+        'モデル依存だが指示は日本語可',
+      ]},
+      { label: 'セキュリティ・プライバシー', cells: [
+        'ローカル実行主体。Bedrock/Vertex/Foundry対応、学習オプトアウト',
+        'Privacy Mode（コード非保持）、SOC2準拠',
+        'IP補償(indemnity)、コード除外設定、企業導入実績が最多',
+        'OpenAIエンプラ準拠、サンドボックス実行',
+        'クラウド実行、エンタープライズ向けの分離',
+        '低価格帯からエンタープライズ管理機能を提供',
+        'BYOK・ローカル実行でコード露出を自分で制御',
+      ]},
+      { label: 'チーム／エンタープライズ', cells: [
+        'Teamプラン、SSO／権限管理、監査（クラウド経由）',
+        'Teams／Enterprise、SSO、RBAC、利用分析',
+        'Business/Enterprise、組織ポリシー、監査ログ、自社コード学習(Ent)',
+        'ChatGPT Enterprise/Team、管理機能',
+        'Teams、席課金、ACU管理',
+        'Teams、管理機能',
+        '基本は個人向け（Cline Teamsあり）',
+      ]},
+    ];
+
+    return { tools, rows, pad, fs };
+  }
+}
+</script>
+</body>
+</html>
