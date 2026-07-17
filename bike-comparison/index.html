@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#0a0c10;color:#e6e9ef;font-family:"Zen Kaku Gothic New",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  *{box-sizing:border-box}
+  a{color:inherit;text-decoration:none}
+  .row{display:grid;grid-template-columns:190px repeat(4,1fr);border-bottom:1px solid rgba(255,255,255,.06)}
+  .row:hover{background:rgba(255,255,255,.015)}
+  .rh{padding:20px 26px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#7c8598;letter-spacing:.05em;align-self:center}
+  .rh span{opacity:.5}
+  .rc{padding:20px 22px;font-size:13.5px;line-height:1.65;border-left:1px solid rgba(255,255,255,.04)}
+  .num{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:26px;line-height:1}
+  .unit{font-family:'JetBrains Mono',monospace;font-size:11px;color:#7c8598;margin-top:3px}
+  .cta1,.cta2{cursor:not-allowed}
+  .cta1:hover{filter:brightness(1.12)}
+  .cta2:hover{border-color:rgba(255,255,255,.45)}
+  .nav a:hover{color:#e6e9ef}
+</style>
+</helmet>
+
+<div style="max-width:1280px;margin:0 auto">
+  <!-- DEMO NOTICE -->
+  <div style="display:flex;align-items:center;justify-content:center;gap:10px;padding:9px 20px;background:repeating-linear-gradient(45deg,#f5b301,#f5b301 12px,#12140f 12px,#12140f 24px);position:relative">
+    <div style="display:flex;align-items:center;gap:10px;background:#0a0c10;border:1px solid rgba(245,179,1,.6);padding:6px 16px;border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;color:#ffcc4d">
+      <span style="width:7px;height:7px;border-radius:50%;background:#ffcc4d;box-shadow:0 0 8px #ffcc4d"></span>
+      SAMPLE ／ デモ表示です ― ボタン・リンクは実際には動作しません
+    </div>
+  </div>
+  <!-- NAV -->
+  <div class="nav" style="display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:rgba(10,12,16,.85);backdrop-filter:blur(12px);z-index:10">
+    <div style="font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:17px;letter-spacing:.02em">MOTO<span style="color:#e60012">.</span>MATRIX</div>
+    <div style="display:flex;gap:30px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#7c8598">
+      <a href="#matrix">比較表</a>
+      <a href="#specs">スペック</a>
+      <a href="#genre">得意ジャンル</a>
+      <a href="#cta">診断</a>
+    </div>
+    <a href="#cta" class="cta1" style="font-family:'JetBrains Mono',monospace;font-size:12px;padding:9px 18px;border-radius:7px;background:#e60012;color:#fff;font-weight:700">1台を選ぶ →</a>
+  </div>
+
+  <!-- HERO -->
+  <div style="padding:60px 40px 44px;background:radial-gradient(120% 140% at 12% 0%,rgba(230,0,18,.10),transparent 42%),radial-gradient(120% 140% at 88% 0%,rgba(87,166,57,.10),transparent 44%)">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7c8598;letter-spacing:.15em;margin-bottom:16px">// JAPANESE MOTORCYCLE MANUFACTURERS ・ THE BIG FOUR</div>
+    <h1 style="margin:0;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:66px;line-height:.98;letter-spacing:-.01em">日本の4大メーカーを<br><span style="color:#e60012">数値</span>で見比べる。</h1>
+    <p style="margin:20px 0 0;color:#a6adbb;font-size:15.5px;line-height:1.75">HONDA・YAMAHA・SUZUKI・KAWASAKI。それぞれの思想は、代表車種とエンジン技術に表れる。フラッグシップの実数値とともに、4社の個性を横断比較。</p>
+    <div style="display:flex;gap:26px;margin-top:30px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#7c8598">
+      <div><span style="font-family:'Chakra Petch',sans-serif;font-size:24px;font-weight:700;color:#e6e9ef">4</span>&nbsp;MANUFACTURERS</div>
+      <div style="border-left:1px solid rgba(255,255,255,.12);padding-left:26px"><span style="font-family:'Chakra Petch',sans-serif;font-size:24px;font-weight:700;color:#e6e9ef">8</span>&nbsp;METRICS</div>
+      <div style="border-left:1px solid rgba(255,255,255,.12);padding-left:26px"><span style="font-family:'Chakra Petch',sans-serif;font-size:24px;font-weight:700;color:#e6e9ef">12</span>&nbsp;MODELS</div>
+    </div>
+  </div>
+
+  <!-- MAKER HEADER ROW -->
+  <div id="matrix" style="display:grid;grid-template-columns:190px repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border-top:1px solid rgba(255,255,255,.08);position:sticky;top:65px;z-index:5">
+    <div style="background:#0a0c10"></div>
+    <div style="background:#0d1016;padding:18px 22px;border-top:3px solid #e60012"><div style="font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:21px">HONDA</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7c8598;margin-top:2px">ホンダ ・ 1948</div></div>
+    <div style="background:#0d1016;padding:18px 22px;border-top:3px solid #0b74e5"><div style="font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:21px">YAMAHA</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7c8598;margin-top:2px">ヤマハ ・ 1955</div></div>
+    <div style="background:#0d1016;padding:18px 22px;border-top:3px solid #f5b301"><div style="font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:21px">SUZUKI</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7c8598;margin-top:2px">スズキ ・ 1952</div></div>
+    <div style="background:#0d1016;padding:18px 22px;border-top:3px solid #57a639"><div style="font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:19px">KAWASAKI</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7c8598;margin-top:2px">カワサキ ・ 1960</div></div>
+  </div>
+
+  <!-- QUALITATIVE ROWS -->
+  <div class="row">
+    <div class="rh">代表車種<br><span>FLAGSHIP</span></div>
+    <div class="rc">CBR1000RR-R<br>Rebel 1100 / Africa Twin</div>
+    <div class="rc">YZF-R1 / MT-09<br>TMAX / Ténéré700</div>
+    <div class="rc">Hayabusa 隼<br>GSX-R1000R / KATANA</div>
+    <div class="rc">Ninja H2 / ZX-10R<br>Z900 / Versys</div>
+  </div>
+  <div class="row">
+    <div class="rh">価格帯<br><span>PRICE</span></div>
+    <div class="rc" style="color:#c3c9d4">原付〜大型まで<br><b style="color:#e6e9ef">最も幅広い</b></div>
+    <div class="rc" style="color:#c3c9d4">中〜高<br><b style="color:#e6e9ef">デザイン価値</b></div>
+    <div class="rc" style="color:#c3c9d4">中<br><b style="color:#e6e9ef">高コスパ</b></div>
+    <div class="rc" style="color:#c3c9d4">中〜高<br><b style="color:#e6e9ef">性能プレミアム</b></div>
+  </div>
+
+  <!-- NUMERIC SPEC ROWS -->
+  <div id="specs" style="padding:26px 26px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:#7c8598">▤ フラッグシップ実数値 ／ REPRESENTATIVE SPECS</div>
+  <div class="row" style="background:rgba(255,255,255,.02)">
+    <div class="rh">最高出力<br><span>MAX POWER</span></div>
+    <div class="rc"><div class="num" style="color:#ff5464">217<span style="font-size:14px">PS</span></div><div class="unit">CBR1000RR-R</div></div>
+    <div class="rc"><div class="num" style="color:#5aa8ff">200<span style="font-size:14px">PS</span></div><div class="unit">YZF-R1</div></div>
+    <div class="rc"><div class="num" style="color:#ffcc4d">190<span style="font-size:14px">PS</span></div><div class="unit">Hayabusa</div></div>
+    <div class="rc"><div class="num" style="color:#7fd155">231<span style="font-size:14px">PS</span></div><div class="unit">Ninja H2</div></div>
+  </div>
+  <div class="row" style="background:rgba(255,255,255,.02)">
+    <div class="rh">排気量<br><span>DISPLACEMENT</span></div>
+    <div class="rc"><div class="num">999<span style="font-size:14px">cc</span></div><div class="unit">直4</div></div>
+    <div class="rc"><div class="num">998<span style="font-size:14px">cc</span></div><div class="unit">直4 CP4</div></div>
+    <div class="rc"><div class="num">1340<span style="font-size:14px">cc</span></div><div class="unit">直4</div></div>
+    <div class="rc"><div class="num">998<span style="font-size:14px">cc</span></div><div class="unit">直4 過給</div></div>
+  </div>
+  <div class="row" style="background:rgba(255,255,255,.02)">
+    <div class="rh">車両重量<br><span>WEIGHT</span></div>
+    <div class="rc"><div class="num">201<span style="font-size:14px">kg</span></div><div class="unit">装備重量</div></div>
+    <div class="rc"><div class="num">201<span style="font-size:14px">kg</span></div><div class="unit">装備重量</div></div>
+    <div class="rc"><div class="num">264<span style="font-size:14px">kg</span></div><div class="unit">装備重量</div></div>
+    <div class="rc"><div class="num">238<span style="font-size:14px">kg</span></div><div class="unit">装備重量</div></div>
+  </div>
+
+  <!-- QUALITATIVE ROWS 2 -->
+  <div class="row">
+    <div class="rh">エンジン技術<br><span>ENGINE</span></div>
+    <div class="rc" style="color:#c3c9d4">可変バルブ・DCT<br>多彩な機構</div>
+    <div class="rc" style="color:#c3c9d4">クロスプレーン<br>CP3エンジン</div>
+    <div class="rc" style="color:#c3c9d4">軽量高出力<br>優れた燃費</div>
+    <div class="rc" style="color:#c3c9d4">スーパー<br>チャージャー(H2)</div>
+  </div>
+  <div class="row">
+    <div class="rh">デザイン特徴<br><span>DESIGN</span></div>
+    <div class="rc" style="color:#c3c9d4">機能美と洗練<br>端正さ</div>
+    <div class="rc" style="color:#c3c9d4">人機官能<br>官能的な造形</div>
+    <div class="rc" style="color:#c3c9d4">硬派で独創的<br>質実剛健</div>
+    <div class="rc" style="color:#c3c9d4">攻撃的なエッジ<br>ライムグリーン</div>
+  </div>
+  <div id="genre" class="row" style="border-bottom:1px solid rgba(255,255,255,.1)">
+    <div class="rh">得意ジャンル<br><span>GENRE</span></div>
+    <div class="rc"><span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(230,0,18,.14);color:#ff5464;border:1px solid rgba(230,0,18,.4)">オールラウンド</span></div>
+    <div class="rc"><span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(11,116,229,.14);color:#5aa8ff;border:1px solid rgba(11,116,229,.4)">スポーツ／MT</span></div>
+    <div class="rc"><span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(245,179,1,.14);color:#ffcc4d;border:1px solid rgba(245,179,1,.4)">メガスポーツ</span></div>
+    <div class="rc"><span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(87,166,57,.14);color:#7fd155;border:1px solid rgba(87,166,57,.4)">スーパースポーツ</span></div>
+  </div>
+
+  <div style="padding:14px 26px 0;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#565e6d;line-height:1.6">※ 数値は各社の代表的フラッグシップ（国内/欧州仕様）の公表値を基にした参考値です。年式・仕様により変動します。</div>
+
+  <!-- CTA -->
+  <div id="cta" style="margin:48px 26px 0;padding:44px 40px;border-radius:16px;background:linear-gradient(135deg,rgba(230,0,18,.09),rgba(87,166,57,.07));border:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7c8598;letter-spacing:.12em;margin-bottom:10px">// FIND YOUR ONE</div>
+      <div style="font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:30px;line-height:1.1">どの哲学が、<br>あなたの一台か。</div>
+    </div>
+    <div style="display:flex;gap:14px">
+      <a href="#matrix" class="cta1" style="font-family:'JetBrains Mono',monospace;font-size:14px;padding:14px 26px;border-radius:9px;background:#e60012;color:#fff;font-weight:700">診断で選ぶ →</a>
+      <a href="#matrix" class="cta2" style="font-family:'JetBrains Mono',monospace;font-size:14px;padding:14px 26px;border-radius:9px;border:1px solid rgba(255,255,255,.2);color:#e6e9ef">全車種カタログ</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="margin-top:44px;padding:26px 40px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:#565e6d">
+    <span>MOTO<span style="color:#e60012">.</span>MATRIX ・ JP BIG FOUR COMPARISON</span>
+    <span>2026 ・ 参考情報サイト（非公式）</span>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
