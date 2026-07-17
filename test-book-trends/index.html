@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>日本のソフトウェアテスト書籍 年代トレンド</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg:#0b0c0e;
+    --bg-soft:#131418;
+    --surface:#15171c;
+    --border:#22242a;
+    --text:#eceae4;
+    --text-dim:#8b8d94;
+    --muted:#5f636d;
+    --accent:#7fe0c4;
+
+    /* categorical (dark-mode steps, fixed order — never cycled) */
+    --c-fund:#3987e5;   /* 技法・設計の基礎 */
+    --c-jstqb:#199e70;  /* JSTQB / 資格対策 */
+    --c-auto:#c98500;   /* テスト自動化 */
+    --c-tdd:#008300;    /* TDD */
+    --c-agile:#9085e9;  /* アジャイル・探索的テスト */
+    --c-qa:#e66767;     /* QA・品質マネジメント */
+    --c-review:#d55181; /* レビュー・欠陥分析 */
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Noto Sans JP',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .mono{font-family:'JetBrains Mono',monospace}
+
+  .glow{
+    position:fixed; inset:0;
+    background:radial-gradient(700px 400px at 15% -10%, rgba(127,224,196,.12), transparent 60%),
+               radial-gradient(600px 500px at 100% 10%, rgba(127,224,196,.06), transparent 60%);
+    pointer-events:none;
+  }
+
+  .wrap{position:relative; max-width:1040px; margin:0 auto; padding:min(10vh,90px) 28px 90px}
+
+  .tag{
+    font:500 12px/1 'JetBrains Mono',monospace;
+    letter-spacing:.28em; text-transform:uppercase;
+    color:var(--text-dim); margin-bottom:20px;
+  }
+  .back{display:inline-block;margin-bottom:26px;font:500 12px/1 'JetBrains Mono',monospace;color:var(--text-dim);letter-spacing:.05em}
+  .back:hover{color:var(--accent)}
+
+  h1{
+    font-size:clamp(32px,5.5vw,52px);
+    font-weight:900; letter-spacing:-.02em; margin:0 0 18px; line-height:1.08;
+    background:linear-gradient(135deg,#fff 0%,var(--accent) 120%);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  p.lead{font-size:15.5px;line-height:1.85;color:var(--text-dim);max-width:38em;margin:0 0 20px}
+
+  .stats{display:flex;gap:28px;margin:30px 0 56px;flex-wrap:wrap}
+  .stat b{display:block;font:700 30px/1 'JetBrains Mono',monospace;color:var(--text)}
+  .stat span{font:500 11px/1 'JetBrains Mono',monospace;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase}
+
+  .section-label{
+    font:600 11px/1 'JetBrains Mono',monospace; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--text-dim); margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .section-label::after{content:"";flex:1;height:1px;background:var(--border)}
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px; margin-bottom:56px}
+
+  /* legend */
+  .legend{display:flex;flex-wrap:wrap;gap:14px 22px;margin-bottom:22px}
+  .legend-item{display:flex;align-items:center;gap:8px;font:500 12.5px/1 'Noto Sans JP',sans-serif;color:var(--text-dim);cursor:pointer;user-select:none;padding:4px 0}
+  .legend-item.off{opacity:.35}
+  .swatch{width:11px;height:11px;border-radius:3px;flex:none}
+
+  /* chart */
+  #chart{width:100%;height:auto;overflow:visible}
+  .bar-seg{transition:opacity .15s ease, filter .15s ease}
+  .bar-seg:hover{filter:brightness(1.2)}
+  .axis-label{font:500 11px 'JetBrains Mono',monospace;fill:var(--muted)}
+  .period-label{font:600 12px 'JetBrains Mono',monospace;fill:var(--text-dim)}
+  .total-label{font:700 13px 'JetBrains Mono',monospace;fill:var(--text)}
+
+  #tooltip{
+    position:fixed; pointer-events:none; z-index:50;
+    background:#0d0e11; border:1px solid var(--border); border-radius:10px;
+    padding:10px 14px; font:500 12.5px/1.5 'Noto Sans JP',sans-serif; color:var(--text);
+    box-shadow:0 12px 30px rgba(0,0,0,.5); opacity:0; transform:translateY(4px);
+    transition:opacity .12s ease, transform .12s ease; max-width:240px;
+  }
+  #tooltip.show{opacity:1; transform:translateY(0)}
+  #tooltip b{color:var(--accent)}
+
+  /* insight list */
+  .insights{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+  .insights li{padding-left:22px;position:relative;font-size:14.5px;line-height:1.8;color:var(--text-dim)}
+  .insights li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:700}
+  .insights b{color:var(--text)}
+
+  /* filter chips */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+  .chip{
+    font:500 12px/1 'JetBrains Mono',monospace; padding:7px 13px; border-radius:20px;
+    border:1px solid var(--border); color:var(--text-dim); cursor:pointer; background:var(--bg-soft);
+    transition:all .15s ease; user-select:none;
+  }
+  .chip:hover{border-color:rgba(127,224,196,.5)}
+  .chip.active{background:rgba(127,224,196,.14); border-color:var(--accent); color:var(--accent)}
+
+  /* table */
+  table{width:100%; border-collapse:collapse; font-size:13.5px}
+  thead th{
+    text-align:left; padding:10px 12px; font:600 10.5px 'JetBrains Mono',monospace;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--text-dim);
+    border-bottom:1px solid var(--border); white-space:nowrap;
+  }
+  tbody td{padding:12px; border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; line-height:1.6}
+  tbody tr:hover{background:rgba(255,255,255,.02)}
+  .yr{font:700 13px 'JetBrains Mono',monospace; color:var(--text)}
+  .cat-pill{
+    display:inline-flex; align-items:center; gap:6px; font:500 11px/1 'JetBrains Mono',monospace;
+    padding:4px 9px; border-radius:20px; white-space:nowrap;
+  }
+  .cat-pill .dot{width:7px;height:7px;border-radius:50%}
+  .book-title{font-weight:700; color:var(--text); margin-bottom:2px}
+  .book-meta{color:var(--muted); font-size:12px}
+  .tbl-wrap{overflow-x:auto; border-radius:12px; border:1px solid var(--border)}
+
+  .note{font:400 11.5px/1.7 'JetBrains Mono',monospace; color:var(--muted); margin-top:16px}
+
+  footer{position:relative; text-align:center; padding:32px; font:400 11.5px/1 'JetBrains Mono',monospace; color:var(--text-dim); border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div id="tooltip"></div>
+
+<div class="wrap">
+  <a class="back" href="../">← さざぶろぐ</a>
+  <div class="tag">book trend research · 非公式まとめ</div>
+  <h1>日本のソフトウェアテスト書籍<br>年代・傾向マップ</h1>
+  <p class="lead">1995年〜2025年に国内で発売されたソフトウェアテスト関連書籍を「発行年」と「扱っているテーマ」でグループ分けし、出版トレンドを可視化しました。JSTQB資格制度の普及、テスト自動化ブームなど、時代ごとの関心の移り変わりが見えてきます。</p>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="section-label">Publication Timeline — テーマ別 出版点数の推移</div>
+  <div class="card">
+    <div class="legend" id="legend"></div>
+    <svg id="chart" viewBox="0 0 960 460"></svg>
+    <div class="note">※ 集計は5年区切り。改訂版・シラバス改訂版は独立した1冊として計上（JSTQB Foundationなど）。件数は筆者調査によるサンプルであり、国内発行の全書籍を網羅するものではありません。</div>
+  </div>
+
+  <div class="section-label">傾向の読み解き</div>
+  <div class="card">
+    <ul class="insights">
+      <li><b>2000年代前半〜半ば：翻訳書による「基礎の輸入」期。</b>『ソフトウェアテスト293の鉄則』『はじめて学ぶソフトウェアのテスト技法』など、海外の名著が相次いで邦訳され、テスト技法の共通言語ができた時期。</li>
+      <li><b>2007年〜：JSTQB資格制度が書籍市場に定着。</b>JSTQB Foundation公式教科書が翔泳社から継続的に改訂され、以後ほぼシラバス改訂のたびに新版が出るロングセラーシリーズに。</li>
+      <li><b>2010年代前半：TDD・レビュー技法など「開発者よりのテスト」書籍が増加。</b>『実践テスト駆動開発』『間違いだらけの設計レビュー』など、テスターだけでなく開発者を読者に含む書籍が目立つ。</li>
+      <li><b>2016〜2019年：テスト自動化書籍が急増。</b>Selenium・Android・iOSなど、対象技術ごとに専門特化した自動化書籍（『Selenium実践入門』『Androidテスト全書』『iOSテスト全書』）が集中的に刊行。</li>
+      <li><b>2020年代：国産オリジナル書籍・実践特化・生成AI/E2Eへのシフト。</b>翻訳書だけでなく国内著者による実践書（『テスト自動化実践ガイド』『ソフトウェアテスト技法練習帳』）が増え、直近ではPlaywrightによるE2Eテストや生成AI活用を扱う書籍も登場している。</li>
+    </ul>
+  </div>
+
+  <div class="section-label">全書籍一覧</div>
+  <div class="filters" id="filters"></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>発行年</th><th>書籍名 / 著者・出版社</th><th>カテゴリ</th></tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<footer>© sazanamix ・ 掲載情報は公開情報を基にした調査であり、内容の完全性・最新性を保証するものではありません</footer>
+
+<script>
+const CATS = {
+  fund:  {label:'技法・設計の基礎', color:'var(--c-fund)'},
+  jstqb: {label:'JSTQB・資格対策', color:'var(--c-jstqb)'},
+  auto:  {label:'テスト自動化', color:'var(--c-auto)'},
+  tdd:   {label:'TDD', color:'var(--c-tdd)'},
+  agile: {label:'アジャイル・探索的テスト', color:'var(--c-agile)'},
+  qa:    {label:'QA・品質マネジメント', color:'var(--c-qa)'},
+  review:{label:'レビュー・欠陥分析', color:'var(--c-review)'},
+};
+
+const BOOKS = [
+  {y:1995, t:'ソフトウェア品質保証の考え方と実際', a:'保田勝通', p:'日科技連出版社', c:'qa'},
+  {y:2003, t:'ソフトウェアテスト293の鉄則', a:'Kaner, Bach, Pettichord（テスト技術者交流会 訳）', p:'日経BP', c:'fund'},
+  {y:2004, t:'体系的ソフトウェアテスト入門', a:'Rick Craig, Stefan Jaskiel', p:'日経BP', c:'fund'},
+  {y:2005, t:'はじめて学ぶソフトウェアのテスト技法', a:'リー・コープランド', p:'日経BP', c:'fund'},
+  {y:2006, t:'ソフトウェア・テストの技法 第2版', a:'Glenford J. Myers', p:'近代科学社', c:'fund'},
+  {y:2007, t:'マインドマップから始めるソフトウェアテスト（初版）', a:'池田暁, 鈴木三紀夫', p:'技術評論社', c:'fund'},
+  {y:2007, t:'JSTQB Foundation 教科書（初版）', a:'湯本剛, 大西建児 ほか', p:'翔泳社', c:'jstqb'},
+  {y:2008, t:'ソフトウェア品質保証入門', a:'保田勝通, 奈良隆正', p:'日科技連出版社', c:'qa'},
+  {y:2009, t:'知識ゼロから学ぶソフトウェアテスト（初版）', a:'高橋寿一', p:'翔泳社', c:'fund'},
+  {y:2009, t:'JSTQB Foundation 第2版', a:'大西建児 ほか', p:'翔泳社', c:'jstqb'},
+  {y:2009, t:'実践アジャイルテスト', a:'リサ・クリスピン, ジャネット・グレゴリー', p:'翔泳社', c:'agile'},
+  {y:2010, t:'ソフトウェアテスト技法ドリル（初版）', a:'秋山浩一', p:'日科技連出版社', c:'fund'},
+  {y:2011, t:'JSTQB Foundation 第3版', a:'湯本剛, 大西建児 ほか', p:'翔泳社', c:'jstqb'},
+  {y:2012, t:'実践テスト駆動開発', a:'Steve Freeman, Nat Pryce', p:'翔泳社', c:'tdd'},
+  {y:2013, t:'間違いだらけの設計レビュー（初版）', a:'森崎修司', p:'日経BP', c:'review'},
+  {y:2013, t:'テスト駆動開発による組み込みプログラミング', a:'James W. Grenning', p:'オライリー・ジャパン', c:'tdd'},
+  {y:2015, t:'【この1冊でよくわかる】ソフトウェアテストの教科書（初版）', a:'石原一宏 ほか', p:'SBクリエイティブ', c:'fund'},
+  {y:2016, t:'Selenium実践入門', a:'伊藤望, 戸田広 ほか', p:'技術評論社', c:'auto'},
+  {y:2017, t:'初めての自動テスト', a:'Jonathan Rasmusson', p:'オライリー・ジャパン', c:'auto'},
+  {y:2017, t:'テスト駆動開発', a:'Kent Beck（和田卓人 訳）', p:'オーム社', c:'tdd'},
+  {y:2018, t:'エキスパートが教えるSelenium最前線', a:'戸田広, 島根義和 ほか', p:'翔泳社', c:'auto'},
+  {y:2018, t:'Androidテスト全書', a:'白山文彦, 外山純生 ほか', p:'PEAKS', c:'auto'},
+  {y:2019, t:'JSTQB Foundation 第4版（シラバス2018対応）', a:'大西建児 ほか', p:'翔泳社', c:'jstqb'},
+  {y:2019, t:'マインドマップから始めるソフトウェアテスト（改訂新版）', a:'池田暁, 鈴木三紀夫', p:'技術評論社', c:'fund'},
+  {y:2019, t:'iOSテスト全書', a:'松尾和昭, 田中賢治 ほか', p:'技術評論社', c:'auto'},
+  {y:2020, t:'ソフトウェアテスト技法練習帳', a:'梅津正洋 ほか', p:'技術評論社', c:'fund'},
+  {y:2020, t:'演習で学ぶソフトウェアテスト 特訓200問（改訂3版）', a:'正木威寛', p:'技術評論社', c:'jstqb'},
+  {y:2020, t:'ソフトウェア品質知識体系ガイド（第3版）', a:'飯泉紀子, 鷲崎弘宜, 誉田直美 監修', p:'オーム社', c:'qa'},
+  {y:2021, t:'【この1冊でよくわかる】ソフトウェアテストの教科書（増補改訂第2版）', a:'布施昌弘, 江添智之 ほか', p:'SBクリエイティブ', c:'fund'},
+  {y:2022, t:'ソフトウェアテスト技法ドリル（第2版）', a:'秋山浩一', p:'日科技連出版社', c:'fund'},
+  {y:2023, t:'知識ゼロから学ぶソフトウェアテスト（第3版）', a:'高橋寿一', p:'翔泳社', c:'fund'},
+  {y:2023, t:'間違いだらけの設計レビュー（増補三訂版）', a:'森崎修司', p:'日経BP', c:'review'},
+  {y:2024, t:'徹底攻略 JSTQB Foundation教科書＆問題集（シラバス2023対応）', a:'梅田弘之', p:'インプレス', c:'jstqb'},
+  {y:2024, t:'JSTQB Foundation 第5版（シラバス2023対応）', a:'大西建児, 湯本剛 ほか', p:'翔泳社', c:'jstqb'},
+  {y:2024, t:'テスト自動化実践ガイド', a:'末村拓也', p:'翔泳社', c:'auto'},
+  {y:2024, t:'［入門］Webフロントエンド E2Eテスト', a:'渋川よしき ほか', p:'技術評論社', c:'auto'},
+  {y:2024, t:'Javaエンジニアのためのソフトウェアテスト実践入門', a:'斉藤賢哉', p:'技術評論社', c:'auto'},
+  {y:2024, t:'探索的テストの考え方', a:'James A. Whittaker', p:'マイナビ出版', c:'agile'},
+  {y:2024, t:'ソフトウェア品質保証の極意', a:'日科技連ソフトウェア品質保証プロフェッショナルの会 編', p:'オーム社', c:'qa'},
+  {y:2025, t:'ソフトウェアテスト徹底指南書', a:'井芹洋輝', p:'技術評論社', c:'fund'},
+];
+
+// ---- stats ----
+const years = BOOKS.map(b=>b.y);
+document.getElementById('stats').innerHTML = `
+  <div class="stat"><b>${BOOKS.length}</b><span>収録書籍数</span></div>
+  <div class="stat"><b>${Math.min(...years)}–${Math.max(...years)}</b><span>発行年レンジ</span></div>
+  <div class="stat"><b>${Object.keys(CATS).length}</b><span>テーマカテゴリ</span></div>
+`;
+
+// ---- bucket into 5-year periods ----
+const BOUNDARIES = [1995,2000,2005,2010,2015,2020,2026];
+function periodOf(y){
+  for(let i=BOUNDARIES.length-2;i>=0;i--){
+    if(y>=BOUNDARIES[i]) return BOUNDARIES[i];
+  }
+  return BOUNDARIES[0];
+}
+const periodStarts = [...new Set(BOOKS.map(b=>periodOf(b.y)))].sort((a,b)=>a-b);
+const periods = periodStarts.map(start=>{
+  const idx = BOUNDARIES.indexOf(start);
+  const end = BOUNDARIES[idx+1]-1;
+  const label = start===end ? `${start}` : `${start}–${end}`;
+  const counts = {};
+  Object.keys(CATS).forEach(k=>counts[k]=0);
+  BOOKS.filter(b=>periodOf(b.y)===start).forEach(b=>counts[b.c]++);
+  const total = Object.values(counts).reduce((a,b)=>a+b,0);
+  return {start, label, counts, total};
+});
+
+// ---- legend ----
+const activeCats = new Set(Object.keys(CATS));
+const legendEl = document.getElementById('legend');
+Object.entries(CATS).forEach(([key,def])=>{
+  const item = document.createElement('div');
+  item.className='legend-item';
+  item.dataset.cat = key;
+  item.innerHTML = `<span class="swatch" style="background:${def.color}"></span>${def.label}`;
+  item.onclick = ()=>{
+    if(activeCats.has(key)){ activeCats.delete(key); item.classList.add('off'); }
+    else { activeCats.add(key); item.classList.remove('off'); }
+    drawChart();
+  };
+  legendEl.appendChild(item);
+});
+
+// ---- chart ----
+const svg = document.getElementById('chart');
+const tooltip = document.getElementById('tooltip');
+const W=960, H=460, padL=44, padR=20, padT=20, padB=50;
+const plotW = W-padL-padR, plotH = H-padT-padB;
+
+function drawChart(){
+  svg.innerHTML='';
+  const maxTotal = Math.max(...periods.map(p=>{
+    return Object.entries(p.counts).filter(([k])=>activeCats.has(k)).reduce((s,[,v])=>s+v,0);
+  }), 1);
+  const niceMax = Math.ceil(maxTotal/2)*2;
+  const barW = plotW/periods.length*0.58;
+  const gap = plotW/periods.length;
+
+  // gridlines
+  const steps=4;
+  for(let i=0;i<=steps;i++){
+    const val = niceMax/steps*i;
+    const y = padT + plotH - (val/niceMax)*plotH;
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',padL); line.setAttribute('x2',W-padR);
+    line.setAttribute('y1',y); line.setAttribute('y2',y);
+    line.setAttribute('stroke','var(--border)'); line.setAttribute('stroke-width','1');
+    svg.appendChild(line);
+    const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x',padL-10); txt.setAttribute('y',y+4);
+    txt.setAttribute('text-anchor','end'); txt.setAttribute('class','axis-label');
+    txt.textContent = Math.round(val);
+    svg.appendChild(txt);
+  }
+
+  periods.forEach((p,i)=>{
+    const cx = padL + gap*i + gap/2;
+    let yCursor = padT + plotH;
+    const activeEntries = Object.entries(p.counts).filter(([k])=>activeCats.has(k) && p.counts[k]>0);
+    const periodTotal = activeEntries.reduce((s,[,v])=>s+v,0);
+
+    activeEntries.forEach(([key,count])=>{
+      const segH = (count/niceMax)*plotH;
+      const y = yCursor - segH;
+      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      rect.setAttribute('x', cx-barW/2);
+      rect.setAttribute('y', y);
+      rect.setAttribute('width', barW);
+      rect.setAttribute('height', Math.max(segH-2,0));
+      rect.setAttribute('rx', 3);
+      rect.setAttribute('fill', CATS[key].color);
+      rect.setAttribute('class','bar-seg');
+      rect.addEventListener('mousemove', (e)=>{
+        tooltip.innerHTML = `<b>${CATS[key].label}</b><br>${p.label}：${count}冊`;
+        tooltip.style.left = (e.clientX+16)+'px';
+        tooltip.style.top = (e.clientY+16)+'px';
+        tooltip.classList.add('show');
+      });
+      rect.addEventListener('mouseleave', ()=> tooltip.classList.remove('show'));
+      svg.appendChild(rect);
+      yCursor -= segH;
+    });
+
+    // total label
+    if(periodTotal>0){
+      const totalTxt = document.createElementNS('http://www.w3.org/2000/svg','text');
+      totalTxt.setAttribute('x',cx); totalTxt.setAttribute('y', yCursor-10);
+      totalTxt.setAttribute('text-anchor','middle'); totalTxt.setAttribute('class','total-label');
+      totalTxt.textContent = periodTotal;
+      svg.appendChild(totalTxt);
+    }
+
+    // period label
+    const periodTxt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    periodTxt.setAttribute('x',cx); periodTxt.setAttribute('y', H-padB+24);
+    periodTxt.setAttribute('text-anchor','middle'); periodTxt.setAttribute('class','period-label');
+    periodTxt.textContent = p.label;
+    svg.appendChild(periodTxt);
+  });
+
+  // baseline
+  const base = document.createElementNS('http://www.w3.org/2000/svg','line');
+  base.setAttribute('x1',padL); base.setAttribute('x2',W-padR);
+  base.setAttribute('y1',padT+plotH); base.setAttribute('y2',padT+plotH);
+  base.setAttribute('stroke','var(--baseline, #383835)'); base.setAttribute('stroke-width','1.5');
+  svg.appendChild(base);
+}
+drawChart();
+
+// ---- filter chips + table ----
+const filtersEl = document.getElementById('filters');
+const tbody = document.getElementById('tbody');
+let currentFilter = 'all';
+
+function chip(key,label){
+  const el = document.createElement('div');
+  el.className = 'chip' + (key===currentFilter?' active':'');
+  el.textContent = label;
+  el.onclick = ()=>{ currentFilter = key; renderFilters(); renderTable(); };
+  return el;
+}
+function renderFilters(){
+  filtersEl.innerHTML='';
+  filtersEl.appendChild(chip('all','すべて'));
+  Object.entries(CATS).forEach(([key,def])=> filtersEl.appendChild(chip(key,def.label)));
+}
+function renderTable(){
+  tbody.innerHTML='';
+  const rows = [...BOOKS].filter(b=> currentFilter==='all' || b.c===currentFilter).sort((a,b)=>b.y-a.y);
+  rows.forEach(b=>{
+    const tr = document.createElement('tr');
+    const def = CATS[b.c];
+    tr.innerHTML = `
+      <td class="yr">${b.y}</td>
+      <td><div class="book-title">${b.t}</div><div class="book-meta">${b.a} ／ ${b.p}</div></td>
+      <td><span class="cat-pill" style="background:color-mix(in srgb, ${def.color} 18%, transparent); color:${def.color}"><span class="dot" style="background:${def.color}"></span>${def.label}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+renderFilters();
+renderTable();
+</script>
+</body>
+</html>
