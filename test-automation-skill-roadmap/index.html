@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=DotGothic16&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'M PLUS Rounded 1c', sans-serif; background: oklch(0.98 0.012 95); color: oklch(0.29 0.02 265); -webkit-font-smoothing: antialiased; }
+  a { color: oklch(0.55 0.15 275); text-decoration: none; }
+  a:hover { color: oklch(0.45 0.15 275); }
+  @keyframes pop { 0% { transform: scale(0.94); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+</style>
+</helmet>
+
+<div style="max-width: 1120px; margin: 0 auto; padding: 56px 24px 96px;">
+
+  <header style="text-align: center; margin-bottom: 56px;">
+    <div style="font-family: 'DotGothic16', monospace; font-size: 15px; letter-spacing: 4px; color: oklch(0.6 0.13 150); margin-bottom: 14px;">SKILL TREE ▸ TEST AUTOMATION</div>
+    <h1 style="font-size: 44px; font-weight: 800; line-height: 1.25; margin: 0 0 16px; letter-spacing: -0.01em;">テスト自動化エンジニア<br>スキルロードマップ</h1>
+    <p style="font-size: 17px; line-height: 1.8; max-width: 620px; margin: 0 auto; color: oklch(0.45 0.02 265);">手動テストから自動化へステップアップするための学習ルート。<br><b style="color: oklch(0.29 0.02 265);">Lv.1 から順にクリア</b>していくのがおすすめです。各スキルをタップすると、学ぶ理由・順序・ツール・教材が開きます。</p>
+    <div style="display: inline-flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; justify-content: center;">
+      <span style="font-family: 'DotGothic16', monospace; font-size: 13px; padding: 7px 14px; border-radius: 999px; background: oklch(0.95 0.05 150); color: oklch(0.42 0.12 150);">▶ START = Lv.1</span>
+      <span style="font-family: 'DotGothic16', monospace; font-size: 13px; padding: 7px 14px; border-radius: 999px; background: oklch(0.95 0.05 45); color: oklch(0.48 0.13 45);">★ CLEAR = Lv.5</span>
+    </div>
+  </header>
+
+  <div style="display: flex; flex-direction: column; gap: 26px;">
+    <sc-for list="{{ levels }}" as="lv" hint-placeholder-count="5">
+      <div style="position: relative; display: flex; gap: 22px; align-items: stretch;">
+
+        <div style="position: relative; width: 96px; flex-shrink: 0; display: flex; justify-content: center;">
+          <div style="position: absolute; top: 46px; bottom: -26px; width: 6px; border-radius: 3px; background: {{ lv.rail }};"></div>
+          <div style="position: relative; z-index: 1; width: 84px; height: 84px; border-radius: 22px; background: #fff; border: 3px solid {{ lv.color }}; box-shadow: 0 8px 22px {{ lv.rail }}; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <span style="font-family: 'DotGothic16', monospace; font-size: 10px; letter-spacing: 2px; color: {{ lv.color }}; margin-bottom: -2px;">LEVEL</span>
+            <span style="font-family: 'DotGothic16', monospace; font-size: 34px; line-height: 1; color: {{ lv.color }};">{{ lv.num }}</span>
+          </div>
+        </div>
+
+        <div style="flex: 1; background: #fff; border: 1px solid oklch(0.9 0.01 265); border-top: 5px solid {{ lv.color }}; border-radius: 18px; padding: 22px 24px 26px; box-shadow: 0 6px 20px oklch(0.5 0.03 265 / 0.06);">
+          <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px;">
+            <h2 style="font-size: 23px; font-weight: 800; margin: 0; color: {{ lv.color }};">{{ lv.title }}</h2>
+            <span style="font-size: 14px; color: oklch(0.55 0.02 265);">{{ lv.subtitle }}</span>
+          </div>
+          <p style="font-size: 13.5px; line-height: 1.7; margin: 0 0 18px; color: oklch(0.5 0.02 265); background: {{ lv.soft }}; padding: 9px 13px; border-radius: 10px;">📍 {{ lv.order }}</p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px;">
+            <sc-for list="{{ lv.skills }}" as="sk" hint-placeholder-count="3">
+              <button onClick="{{ sk.open }}" style="text-align: left; cursor: pointer; font-family: inherit; background: #fff; border: 1.5px solid oklch(0.91 0.01 265); border-radius: 14px; padding: 14px; display: flex; gap: 12px; align-items: flex-start; transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;" style-hover="text-align: left; cursor: pointer; font-family: inherit; background: #fff; border: 1.5px solid {{ sk.color }}; border-radius: 14px; padding: 14px; display: flex; gap: 12px; align-items: flex-start; transform: translateY(-3px); box-shadow: 0 10px 22px {{ sk.rail }};">
+                <span style="flex-shrink: 0; width: 44px; height: 44px; border-radius: 11px; background: {{ sk.soft }}; color: {{ sk.color }}; display: flex; align-items: center; justify-content: center; font-family: 'DotGothic16', monospace; font-size: 15px; font-weight: 700;">{{ sk.mono }}</span>
+                <span style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
+                  <span style="font-size: 15px; font-weight: 700; line-height: 1.35; color: oklch(0.29 0.02 265);">{{ sk.name }}</span>
+                  <span style="font-size: 12px; line-height: 1.5; color: oklch(0.55 0.02 265);">{{ sk.short }}</span>
+                  <span style="font-size: 11.5px; font-weight: 700; color: {{ sk.color }}; margin-top: 2px;">詳しく見る ›</span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <footer style="text-align: center; margin-top: 56px; font-size: 13px; color: oklch(0.6 0.02 265); line-height: 1.8;">
+    <div style="font-family: 'DotGothic16', monospace; letter-spacing: 2px; color: oklch(0.62 0.15 35);">★ ALL CLEAR ★</div>
+    Lv.5 まで到達すれば、テスト設計から実行基盤・非機能まで見渡せる SDET（Software Development Engineer in Test）です。
+  </footer>
+</div>
+
+<sc-if value="{{ hasSelected }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ close }}" style="position: fixed; inset: 0; z-index: 50; background: oklch(0.3 0.02 265 / 0.42); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; padding: 24px; animation: fade 0.15s ease;">
+    <div onClick="{{ stop }}" style="width: 100%; max-width: 580px; max-height: 88vh; overflow-y: auto; background: #fff; border-radius: 22px; box-shadow: 0 30px 70px oklch(0.3 0.05 265 / 0.35); animation: pop 0.18s ease;">
+      <div style="padding: 26px 28px 20px; border-top: 6px solid {{ selected.color }}; border-radius: 22px 22px 0 0; background: {{ selected.soft }};">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+          <div>
+            <div style="font-family: 'DotGothic16', monospace; font-size: 12px; letter-spacing: 1px; color: {{ selected.color }}; margin-bottom: 6px;">LEVEL {{ selected.levelNum }} ・ {{ selected.levelTitle }}</div>
+            <div style="display: flex; gap: 13px; align-items: center;">
+              <span style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 12px; background: #fff; color: {{ selected.color }}; display: flex; align-items: center; justify-content: center; font-family: 'DotGothic16', monospace; font-size: 16px; box-shadow: 0 3px 10px {{ selected.rail }};">{{ selected.mono }}</span>
+              <h3 style="margin: 0; font-size: 22px; font-weight: 800; line-height: 1.3;">{{ selected.name }}</h3>
+            </div>
+          </div>
+          <button onClick="{{ close }}" style="flex-shrink: 0; cursor: pointer; border: none; background: #fff; width: 34px; height: 34px; border-radius: 10px; font-size: 18px; color: oklch(0.5 0.02 265); box-shadow: 0 2px 8px oklch(0.4 0.02 265 / 0.15);">✕</button>
+        </div>
+      </div>
+
+      <div style="padding: 22px 28px 30px; display: flex; flex-direction: column; gap: 22px;">
+        <section>
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: {{ selected.color }}; margin-bottom: 7px;">概要</div>
+          <p style="margin: 0; font-size: 15px; line-height: 1.85;">{{ selected.summary }}</p>
+        </section>
+        <section style="background: {{ selected.soft }}; border-radius: 14px; padding: 15px 17px;">
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: {{ selected.color }}; margin-bottom: 7px;">🧭 なぜこの順番で学ぶ?</div>
+          <p style="margin: 0; font-size: 14.5px; line-height: 1.85;">{{ selected.why }}</p>
+        </section>
+        <section>
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: {{ selected.color }}; margin-bottom: 9px;">代表的なツール・技術</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <sc-for list="{{ selected.tools }}" as="t" hint-placeholder-count="3">
+              <span style="font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 999px; background: #fff; border: 1.5px solid {{ selected.color }}; color: {{ selected.color }};">{{ t }}</span>
+            </sc-for>
+          </div>
+        </section>
+        <section>
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: 1px; color: {{ selected.color }}; margin-bottom: 9px;">📚 おすすめの学び方・教材</div>
+          <div style="display: flex; flex-direction: column; gap: 9px;">
+            <sc-for list="{{ selected.resources }}" as="r" hint-placeholder-count="3">
+              <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.65;">
+                <span style="color: {{ selected.color }}; flex-shrink: 0; font-weight: 700;">▸</span>
+                <span>{{ r }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { selected: null };
+
+  levels = [
+    {
+      num: "1", color: "oklch(0.56 0.13 150)", soft: "oklch(0.96 0.045 150)", rail: "oklch(0.56 0.13 150 / 0.22)",
+      title: "冒険のはじまり", subtitle: "土台づくり",
+      order: "まず「何を・なぜ自動化するか」を判断できる目と、コードを読み書きする力を作ります。ここが弱いと後のツールが全部つらくなる、最重要の土台です。",
+      skills: [
+        { mono: "Q", name: "テストの基礎と品質の考え方", short: "自動化の前に「何を自動化すべきか」",
+          summary: "テストピラミッド、探索的テスト、テスト観点、自動化に向く/向かないケースの見極め。手動テストの経験を「自動化する対象の選定眼」に変換する段階です。",
+          why: "自動化はあくまで手段。先に品質の考え方を持たないと、壊れやすく価値の低いテストを量産してしまいます。手動テスト出身の強みを最初に言語化しておきます。",
+          tools: ["テストピラミッド", "テスト観点表", "リスクベース"],
+          resources: ["書籍『テスト自動化の8原則』やテスト自動化研究会(STAR)の資料で全体像を掴む", "自分が今やっている手動テストを『これは自動化すべき/しないべき』に仕分けしてみる", "ISTQB Foundation のシラバスで用語を整理する"] },
+        { mono: "Py", name: "プログラミング基礎", short: "Python か JavaScript を1つ選ぶ",
+          summary: "変数・条件分岐・ループ・関数・配列/オブジェクト・例外処理まで。まずは1言語を「読める・少し書ける」レベルに。QAならPythonかJavaScript/TypeScriptが定番です。",
+          why: "自動化ツールはすべてコードで動きます。文法を後回しにするとツールの学習が『写経』になり応用が効きません。順番として2番目に固めます。",
+          tools: ["Python", "JavaScript / TypeScript", "VS Code"],
+          resources: ["Python なら『みんなのPython』や公式チュートリアル、JS なら MDN Web Docs", "Progate / paiza などで手を動かして文法に慣れる", "小さな自動化スクリプト(ファイル整理・CSV処理など)を1つ作ってみる"] },
+        { mono: "Git", name: "バージョン管理 (Git)", short: "コードとテストを安全に管理",
+          summary: "clone / commit / branch / merge / pull request の基本操作。チーム開発では必須で、CI/CDにもつながる前提スキルです。",
+          why: "テストコードもソースコード。早いうちにGitに慣れておくと、後のCI/CDやチームでの共同作業がスムーズになります。基礎と同時期に習得を。",
+          tools: ["Git", "GitHub / GitLab"],
+          resources: ["『サル先生のGit入門』などの入門サイトで一通り操作を体験", "自分の練習コードを GitHub にpushして管理する習慣をつける"] }
+      ]
+    },
+    {
+      num: "2", color: "oklch(0.55 0.12 220)", soft: "oklch(0.96 0.04 220)", rail: "oklch(0.55 0.12 220 / 0.22)",
+      title: "はじめての自動化", subtitle: "Web UI テスト",
+      order: "土台ができたら、最も需要が多く成果も見えやすいWeb UI自動化へ。手動でやっていた画面操作をコードで再現する、いちばん達成感のある段階です。",
+      skills: [
+        { mono: "PW", name: "モダンWeb自動化 (Playwright / Cypress)", short: "今から始めるならまずこれ",
+          summary: "ブラウザを自動操作してUIをテストする、現在の主流ツール。自動待機・トレース・デバッグが強力で、初学者でも安定したテストが書きやすいのが特徴です。",
+          why: "Seleniumより新しく学習コストが低いため、最初の『動く自動化体験』に最適。まずここで成功体験を得てから、歴史的背景としてSeleniumを学ぶ順が効率的です。",
+          tools: ["Playwright", "Cypress", "TypeScript"],
+          resources: ["Playwright 公式ドキュメント(日本語情報も充実)のGetting Started", "自社サイトやログイン画面など、身近な画面のE2Eテストを1本書く", "codegen 機能で操作を録画し、生成コードを読んで学ぶ"] },
+        { mono: "Se", name: "Selenium WebDriver", short: "業界標準と既存資産の理解",
+          summary: "Web自動化の事実上の標準。多くの企業に既存のSeleniumテスト資産があり、求人でも頻出。仕組み(WebDriverプロトコル)を理解しておく価値があります。",
+          why: "新規はPlaywright推奨でも、現場ではSeleniumが根強く残っています。モダンツールで概念を掴んだ後だと、Seleniumの理解も一気に速くなります。",
+          tools: ["Selenium WebDriver", "Selenium Grid"],
+          resources: ["Selenium 公式ドキュメントで WebDriver の考え方を理解", "Playwrightで書いたテストをSeleniumで書き換えて違いを体感する"] },
+        { mono: "POM", name: "設計パターンと保守性", short: "壊れにくいテストの書き方",
+          summary: "ページオブジェクトモデル(POM)、ロケータ戦略(data-testid等)、待機処理、テストの独立性。数が増えても壊れにくく読みやすいテストにする設計の考え方です。",
+          why: "自動化は『書けること』より『壊れず保守できること』が本番。ツール操作に慣れた直後、テストが増える前にこの設計を身につけると後が楽になります。",
+          tools: ["Page Object Model", "data-testid", "Fixture / Hooks"],
+          resources: ["POM の解説記事を読み、書いたテストをリファクタリングしてみる", "『どのロケータが壊れにくいか』を意識してセレクタを選び直す"] }
+      ]
+    },
+    {
+      num: "3", color: "oklch(0.54 0.15 278)", soft: "oklch(0.96 0.05 278)", rail: "oklch(0.54 0.15 278 / 0.22)",
+      title: "領域を広げる", subtitle: "API・モバイル",
+      order: "UIテストだけでは遅く不安定。より速く安定したAPIテストと、需要の高いモバイル自動化へ領域を拡大します。テストピラミッドの下層を厚くする段階。",
+      skills: [
+        { mono: "API", name: "API・バックエンドテスト", short: "速くて安定した『下の層』",
+          summary: "HTTP/REST、リクエストとレスポンス、ステータスコード、JSON。UIを介さず直接APIを検証することで、高速で壊れにくいテストが書けます。",
+          why: "UIテストは遅く不安定になりがち。テストピラミッドの考え方(Lv.1)に沿えば、API層を厚くするのが正解。UI自動化に慣れた次のステップとして最適です。",
+          tools: ["Postman", "REST Assured", "requests / pytest", "Playwright APIテスト"],
+          resources: ["まず Postman で手動でAPIを叩き、リクエスト/レスポンスに慣れる", "その後 pytest+requests や REST Assured でコード化する", "HTTPステータスコードとRESTの基本を整理する"] },
+        { mono: "App", name: "モバイル自動化 (Appium)", short: "iOS / Android アプリの自動テスト",
+          summary: "実機・エミュレータ上でモバイルアプリを自動操作。SeleniumのWebDriver互換なので、Web自動化の知識をそのまま活かせます。",
+          why: "モバイル案件がある人向けの選択科目。Web自動化(Lv.2)の延長線上にあるため、その後に学ぶと概念の再利用ができて効率的です。",
+          tools: ["Appium", "Android Emulator", "Xcode Simulator"],
+          resources: ["Appium 公式ドキュメントのセットアップから", "まずは電卓アプリなど簡単なアプリで1操作を自動化してみる"] },
+        { mono: "Mock", name: "テストデータ・モック管理", short: "テストを安定させる裏方",
+          summary: "テストデータの準備・後始末、外部依存のモック/スタブ化、環境の切り替え。テストを再現性高く、独立して動かすための技術です。",
+          why: "API・UIテストが増えると『データが原因で落ちる』問題に必ずぶつかります。この段階で対策を学ぶと、フレーキーテストを未然に防げます。",
+          tools: ["モック / スタブ", "テストフィクスチャ", "WireMock / MSW"],
+          resources: ["テストの前後でデータを用意/削除する仕組みを自分のテストに導入する", "外部API呼び出しをモック化して、外部依存を切る練習をする"] }
+      ]
+    },
+    {
+      num: "4", color: "oklch(0.54 0.16 322)", soft: "oklch(0.96 0.05 322)", rail: "oklch(0.54 0.16 322 / 0.22)",
+      title: "基盤とチーム開発", subtitle: "CI/CD・コンテナ",
+      order: "テストは『自動で回り続けて』はじめて価値になります。書いたテストを継続的に・どこでも実行する基盤づくりへ。DevOps寄りの領域です。",
+      skills: [
+        { mono: "CI", name: "CI/CD パイプライン", short: "テストを自動で回し続ける",
+          summary: "コードが変わるたびにテストを自動実行する仕組み。GitHub Actions などでプッシュやPRをトリガーにテストを走らせ、結果をチームに共有します。",
+          why: "手元で動くだけのテストは価値が半減。Git(Lv.1)とテスト資産(Lv.2-3)が揃った今こそ、それらを自動実行に載せる番です。SDETの中核スキル。",
+          tools: ["GitHub Actions", "Jenkins", "GitLab CI"],
+          resources: ["GitHub Actions で『pushしたらテスト実行』の最小ワークフローを作る", "テスト結果やレポートをアーティファクトとして残す設定を学ぶ"] },
+        { mono: "Doc", name: "Docker・コンテナ", short: "どこでも同じ環境で実行",
+          summary: "テスト実行環境をコンテナ化し、『自分のPCでは動くのに…』を無くす技術。CIでの安定実行や、ブラウザ/DBの用意にも使います。",
+          why: "CI/CDを組むと環境差の問題が顕在化します。そのタイミングでDockerを学ぶと、必要性を実感しながら習得できて定着します。",
+          tools: ["Docker", "docker-compose", "コンテナイメージ"],
+          resources: ["Docker公式のチュートリアルで image / container の基本を理解", "テスト対象アプリやSelenium/DBをコンテナで立ち上げてみる"] },
+        { mono: "AWS", name: "クラウド実行環境", short: "スケールする実行基盤",
+          summary: "クラウド上でのテスト実行、並列実行基盤、クロスブラウザ/実機クラウド。大量のテストを速く安定して回すためのインフラ知識です。",
+          why: "テスト数が増えると1台では時間がかかりすぎます。CI/コンテナの次に、実行をスケールさせる手段として学ぶと流れが自然です。",
+          tools: ["AWS 基礎", "Selenium Grid", "BrowserStack / Sauce Labs"],
+          resources: ["Selenium Grid や BrowserStack で並列・クロスブラウザ実行を試す", "AWSの基本(EC2/S3/IAM)をハンズオンで軽く触れておく"] }
+      ]
+    },
+    {
+      num: "5", color: "oklch(0.62 0.15 38)", soft: "oklch(0.96 0.05 48)", rail: "oklch(0.62 0.15 38 / 0.24)",
+      title: "品質の番人", subtitle: "高度化・非機能",
+      order: "機能テストの自動化を極めたら、非機能(性能)や品質そのもののマネジメントへ。チームの品質を底上げする、SDET/QAリードの領域です。",
+      skills: [
+        { mono: "Perf", name: "パフォーマンス・負荷テスト", short: "速さ・耐久性を測る",
+          summary: "システムの応答時間やスループット、負荷をかけたときの挙動を検証。機能が正しいだけでなく『速くて落ちない』を保証する非機能テストです。",
+          why: "機能テスト自動化(Lv.2-4)を土台に、その先の非機能へ。CI基盤があると負荷テストも継続的に回せるため、この順番が効率的です。",
+          tools: ["k6", "JMeter", "Locust", "Gatling"],
+          resources: ["k6 は書き味がJSで学びやすく、公式ドキュメントのサンプルから始めやすい", "まず単一APIに負荷をかけ、レイテンシとエラー率のグラフを読む練習を"] },
+        { mono: "Adv", name: "高度なテスト戦略", short: "壊れないテスト群を運用する",
+          summary: "フレーキーテスト対策、並列実行の最適化、テストの選別(影響範囲)、リトライ戦略、テスト全体の設計。大規模なテスト資産を健全に保つ運用技術です。",
+          why: "テストが数百・数千に増えると『遅い・不安定・信頼されない』問題が起きます。ここまでの経験がある今だからこそ、俯瞰した戦略が立てられます。",
+          tools: ["フレーキー対策", "並列/シャーディング", "テスト影響分析"],
+          resources: ["自分のCIで最も不安定なテストを特定し、原因を分類して潰す", "実行時間の内訳を計測し、並列化やテスト削減で短縮する"] },
+        { mono: "Obs", name: "品質メトリクスと可視化", short: "品質を数字で語る",
+          summary: "カバレッジ、テスト成功率、実行時間、不具合傾向などを計測・可視化し、チームや上司に品質を数字で伝える。改善のPDCAを回す土台になります。",
+          why: "最後は『測って改善する』フェーズ。全レベルの活動を数値で見せられると、自動化の投資対効果を説明でき、QAとしての価値が最大化します。",
+          tools: ["テストレポート", "カバレッジ計測", "ダッシュボード"],
+          resources: ["Allure などのレポートツールでテスト結果を可視化する", "『どの指標を追うべきか』をチームで決め、定期的にレビューする"] }
+      ]
+    }
+  ];
+
+  renderVals() {
+    const sel = this.state.selected;
+    const levels = this.levels.map((lv) => ({
+      ...lv,
+      skills: lv.skills.map((sk) => ({
+        ...sk,
+        color: lv.color, soft: lv.soft, rail: lv.rail,
+        open: () => this.setState({
+          selected: { ...sk, color: lv.color, soft: lv.soft, rail: lv.rail, levelNum: lv.num, levelTitle: lv.title }
+        })
+      }))
+    }));
+    return {
+      levels,
+      selected: sel,
+      hasSelected: !!sel,
+      close: () => this.setState({ selected: null }),
+      stop: (e) => e.stopPropagation()
+    };
+  }
+}
+</script>
+</body>
+</html>
