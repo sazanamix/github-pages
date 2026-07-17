@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: oklch(0.99 0.004 80); }
+  a { color: oklch(0.55 0.15 40); text-decoration: none; }
+  a:hover { color: oklch(0.45 0.15 40); text-decoration: underline; }
+  ::selection { background: oklch(0.9 0.05 50); }
+</style>
+</helmet>
+<div style="font-family:'Noto Sans JP',sans-serif;color:oklch(0.28 0.01 60);min-height:100vh;-webkit-font-smoothing:antialiased;">
+
+  <!-- ===== HEADER ===== -->
+  <header style="max-width:920px;margin:0 auto;padding:64px 28px 28px;">
+    <div style="display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:oklch(0.55 0.15 40);text-transform:uppercase;margin-bottom:18px;">
+      <span style="width:7px;height:7px;border-radius:50%;background:oklch(0.58 0.15 40);display:inline-block;"></span>
+      Getting started guide
+    </div>
+    <h1 style="font-size:44px;line-height:1.15;font-weight:900;margin:0 0 14px;letter-spacing:-0.01em;color:oklch(0.22 0.01 60);">Claude Code<br>30日ロードマップ</h1>
+    <p style="font-size:17px;line-height:1.8;color:oklch(0.5 0.01 60);margin:0;">開発経験はあるけれど CLI や AI コーディングツールは初めて、そんなあなたが使い始めからの日数ごとに一歩ずつ Claude Code を使いこなせるようになるためのガイドです。</p>
+
+    <!-- progress -->
+    <div style="margin-top:34px;padding:20px 22px;background:#fff;border:1px solid oklch(0.92 0.006 80);border-radius:14px;box-shadow:0 1px 3px oklch(0.7 0.01 60 / 0.06);">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;">
+        <span style="font-size:14px;font-weight:700;color:oklch(0.3 0.01 60);">学習チェックリストの進捗</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.5 0.01 60);">{{ progress.done }} / {{ progress.total }} 完了</span>
+      </div>
+      <div style="height:9px;border-radius:6px;background:oklch(0.93 0.006 80);overflow:hidden;">
+        <div style="height:100%;border-radius:6px;background:oklch(0.6 0.15 40);transition:width 0.4s ease;width:{{ progress.pct }}%;"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== TABS ===== -->
+  <nav style="position:sticky;top:0;z-index:20;background:oklch(0.99 0.004 80 / 0.88);backdrop-filter:blur(10px);border-bottom:1px solid oklch(0.93 0.006 80);">
+    <div style="max-width:920px;margin:0 auto;padding:12px 28px;display:flex;gap:8px;overflow-x:auto;">
+      <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="5">
+        <button onClick="{{ tab.onClick }}" style="{{ tab.style }}">
+          <span style="font-size:11px;font-weight:500;opacity:0.7;font-family:'JetBrains Mono',monospace;">DAY {{ tab.day }}</span>
+          <span style="font-size:14px;font-weight:700;">{{ tab.theme }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </nav>
+
+  <main style="max-width:920px;margin:0 auto;padding:40px 28px 100px;">
+
+    <!-- ============ DAY 1 ============ -->
+    <sc-if value="{{ isD1 }}" hint-placeholder-val="{{ true }}">
+    <article>
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:8px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:64px;font-weight:500;line-height:1;color:oklch(0.6 0.13 40);">01</span>
+        <div>
+          <div style="font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;color:oklch(0.6 0.13 40);text-transform:uppercase;">初日</div>
+          <h2 style="font-size:28px;font-weight:900;margin:2px 0 0;color:oklch(0.22 0.01 60);">とにかく動かす</h2>
+        </div>
+      </div>
+      <p style="font-size:16px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0 0 8px;">まずはインストールして起動し、自分のコードについて話しかけてみるところまで。難しい設定は後回しで大丈夫です。</p>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.6 0.13 40);"></span>1. インストール</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;">Node.js が入っていれば、npm でグローバルにインストールできます。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">npm install -g @anthropic-ai/claude-code</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.6 0.13 40);"></span>2. プロジェクトで起動する</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;">作業したいリポジトリのルートフォルダに移動してから <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">claude</code> と打つのがコツ。最初にブラウザでのログインを求められます。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">cd ~/projects/my-app
+claude</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.6 0.13 40);"></span>3. コードベースについて聞いてみる</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;">いきなりコードを書かせなくてOK。まずは「このリポジトリが何をするものか説明して」と聞いて、Claude がどうやってファイルを読むのかを体験しましょう。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">このリポジトリの構成と主要な処理を説明して</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <div style="margin-top:30px;background:oklch(0.97 0.02 45);border-left:3px solid oklch(0.6 0.13 40);border-radius:10px;padding:16px 20px;">
+        <div style="font-size:13px;font-weight:700;color:oklch(0.5 0.13 40);margin-bottom:6px;">💡 初日のコツ</div>
+        <p style="font-size:14.5px;line-height:1.8;color:oklch(0.4 0.02 50);margin:0;">Claude Code はファイルを勝手に書き換える前に必ず確認を求めます。怖がらず、まずは提案内容を眺めるだけでも十分。合わないと思ったら Esc でいつでも止められます。</p>
+      </div>
+
+      <div style="margin-top:36px;padding:22px;background:#fff;border:1px solid oklch(0.92 0.006 80);border-radius:14px;">
+        <div style="font-size:15px;font-weight:700;margin-bottom:14px;color:oklch(0.28 0.01 60);">初日のチェックリスト</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <sc-for list="{{ d1Checks }}" as="item" hint-placeholder-count="4">
+            <label onClick="{{ item.onClick }}" style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid oklch(0.92 0.006 80);border-radius:10px;cursor:pointer;user-select:none;">
+              <span style="{{ item.boxStyle }}">✓</span>
+              <span style="{{ item.labelStyle }}">{{ item.label }}</span>
+            </label>
+          </sc-for>
+        </div>
+      </div>
+    </article>
+    </sc-if>
+
+    <!-- ============ DAY 3 ============ -->
+    <sc-if value="{{ isD3 }}" hint-placeholder-val="{{ false }}">
+    <article>
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:8px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:64px;font-weight:500;line-height:1;color:oklch(0.6 0.13 155);">03</span>
+        <div>
+          <div style="font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;color:oklch(0.6 0.13 155);text-transform:uppercase;">3日目</div>
+          <h2 style="font-size:28px;font-weight:900;margin:2px 0 0;color:oklch(0.22 0.01 60);">基本操作に慣れる</h2>
+        </div>
+      </div>
+      <p style="font-size:16px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0 0 8px;">スラッシュコマンドと会話の管理を覚えると、作業がぐっと快適になります。「一度に一つのタスク」を意識しましょう。</p>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.6 0.13 155);"></span>1. スラッシュコマンドを覚える</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;"><code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">/</code> から始まる特別なコマンドがあります。まず <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">/help</code> で一覧を確認しましょう。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">/help</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.6 0.13 155);"></span>2. 会話をこまめにリセットする</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;">別の作業に移るときは <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">/clear</code> で会話をまっさらに。前の話題が残っていると回答がぶれる原因になります。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">/clear</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.6 0.13 155);"></span>3. 差分を確認して承認する</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;">ファイル編集が提案されると差分（変更内容）が表示されます。中身を読んでから承認する習慣をつけましょう。意図と違えば、そのまま「ここはこう直して」と追加で指示できます。</p>
+
+      <div style="margin-top:30px;background:oklch(0.97 0.02 155);border-left:3px solid oklch(0.6 0.13 155);border-radius:10px;padding:16px 20px;">
+        <div style="font-size:13px;font-weight:700;color:oklch(0.48 0.13 155);margin-bottom:6px;">💡 3日目のコツ</div>
+        <p style="font-size:14.5px;line-height:1.8;color:oklch(0.4 0.02 50);margin:0;">お願いは小さく区切るほど精度が上がります。「機能A→テスト→機能B」と一つずつ。うまくいかないときは <code style="font-family:'JetBrains Mono',monospace;font-size:12.5px;background:#fff;padding:1px 5px;border-radius:5px;">/clear</code> して指示を言い直すのが一番の近道です。</p>
+      </div>
+
+      <div style="margin-top:36px;padding:22px;background:#fff;border:1px solid oklch(0.92 0.006 80);border-radius:14px;">
+        <div style="font-size:15px;font-weight:700;margin-bottom:14px;color:oklch(0.28 0.01 60);">3日目のチェックリスト</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <sc-for list="{{ d3Checks }}" as="item" hint-placeholder-count="4">
+            <label onClick="{{ item.onClick }}" style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid oklch(0.92 0.006 80);border-radius:10px;cursor:pointer;user-select:none;">
+              <span style="{{ item.boxStyle }}">✓</span>
+              <span style="{{ item.labelStyle }}">{{ item.label }}</span>
+            </label>
+          </sc-for>
+        </div>
+      </div>
+    </article>
+    </sc-if>
+
+    <!-- ============ DAY 7 ============ -->
+    <sc-if value="{{ isD7 }}" hint-placeholder-val="{{ false }}">
+    <article>
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:8px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:64px;font-weight:500;line-height:1;color:oklch(0.58 0.13 255);">07</span>
+        <div>
+          <div style="font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;color:oklch(0.58 0.13 255);text-transform:uppercase;">7日目</div>
+          <h2 style="font-size:28px;font-weight:900;margin:2px 0 0;color:oklch(0.22 0.01 60);">自分好みに設定する</h2>
+        </div>
+      </div>
+      <p style="font-size:16px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0 0 8px;">プロジェクトのルールを覚えさせ、指示の出し方を洗練させる段階。ここを押さえると出力の質が段違いになります。</p>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.58 0.13 255);"></span>1. CLAUDE.md を作る</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;"><code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">/init</code> を実行すると、プロジェクト用の <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">CLAUDE.md</code> が自動生成されます。ここに書いたルール（コーディング規約・使うコマンド・注意点）は毎回の会話に読み込まれます。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">/init</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.58 0.13 255);"></span>2. 権限（許可）を管理する</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;">毎回同じ確認が出て面倒なら、よく使うコマンドを許可リストに追加できます。設定は <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">/permissions</code> から。安全な範囲で少しずつ広げましょう。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">/permissions</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.58 0.13 255);"></span>3. 「計画→実行」で頼む</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;">大きめの変更は、いきなり書かせず「まず計画を立てて。実装はしないで」と頼むのがコツ。計画を確認してから「ではこの方針で進めて」と続けると、手戻りが激減します。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">認証機能を追加したい。まず実装計画だけ立てて。コードは書かないで</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <div style="margin-top:30px;background:oklch(0.97 0.02 255);border-left:3px solid oklch(0.58 0.13 255);border-radius:10px;padding:16px 20px;">
+        <div style="font-size:13px;font-weight:700;color:oklch(0.48 0.13 255);margin-bottom:6px;">💡 7日目のコツ</div>
+        <p style="font-size:14.5px;line-height:1.8;color:oklch(0.4 0.02 50);margin:0;">CLAUDE.md には「守ってほしいこと」を箇条書きで簡潔に。長い散文より短い命令形が効きます。例：「テストは vitest を使う」「新しい依存を入れる前に確認する」。</p>
+      </div>
+
+      <div style="margin-top:36px;padding:22px;background:#fff;border:1px solid oklch(0.92 0.006 80);border-radius:14px;">
+        <div style="font-size:15px;font-weight:700;margin-bottom:14px;color:oklch(0.28 0.01 60);">7日目のチェックリスト</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <sc-for list="{{ d7Checks }}" as="item" hint-placeholder-count="4">
+            <label onClick="{{ item.onClick }}" style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid oklch(0.92 0.006 80);border-radius:10px;cursor:pointer;user-select:none;">
+              <span style="{{ item.boxStyle }}">✓</span>
+              <span style="{{ item.labelStyle }}">{{ item.label }}</span>
+            </label>
+          </sc-for>
+        </div>
+      </div>
+    </article>
+    </sc-if>
+
+    <!-- ============ DAY 14 ============ -->
+    <sc-if value="{{ isD14 }}" hint-placeholder-val="{{ false }}">
+    <article>
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:8px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:64px;font-weight:500;line-height:1;color:oklch(0.58 0.13 320);">14</span>
+        <div>
+          <div style="font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;color:oklch(0.58 0.13 320);text-transform:uppercase;">14日目</div>
+          <h2 style="font-size:28px;font-weight:900;margin:2px 0 0;color:oklch(0.22 0.01 60);">ワークフローを広げる</h2>
+        </div>
+      </div>
+      <p style="font-size:16px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0 0 8px;">Git 連携や外部ツール接続、自分専用コマンドで、日常の開発に本格的に組み込んでいきます。</p>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.58 0.13 320);"></span>1. Git を任せる</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;">「変更をコミットして」と頼めば、差分を読んで適切なコミットメッセージまで作ってくれます。プルリクの下書きも依頼できます。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">今の変更を意味のある単位でコミットして</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.58 0.13 320);"></span>2. MCP で外部ツールをつなぐ</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;">MCP（Model Context Protocol）サーバーを追加すると、DB やチケット管理などの外部システムを Claude から扱えます。設定状況は <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">/mcp</code> で確認。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">/mcp</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.58 0.13 320);"></span>3. 自分専用のコマンドを作る</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;">よく使う指示は <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">.claude/commands/</code> に Markdown で保存すると、<code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">/コマンド名</code> で呼び出せるようになります。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">echo "変更点のテストを書いて実行して" > .claude/commands/test.md</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <div style="margin-top:30px;background:oklch(0.97 0.02 320);border-left:3px solid oklch(0.58 0.13 320);border-radius:10px;padding:16px 20px;">
+        <div style="font-size:13px;font-weight:700;color:oklch(0.48 0.13 320);margin-bottom:6px;">💡 14日目のコツ</div>
+        <p style="font-size:14.5px;line-height:1.8;color:oklch(0.4 0.02 50);margin:0;">スクリーンショットや画像を貼り付けて「この画面と同じUIを作って」「このエラーを直して」と頼めます。バグ報告やデザイン再現で強力です。</p>
+      </div>
+
+      <div style="margin-top:36px;padding:22px;background:#fff;border:1px solid oklch(0.92 0.006 80);border-radius:14px;">
+        <div style="font-size:15px;font-weight:700;margin-bottom:14px;color:oklch(0.28 0.01 60);">14日目のチェックリスト</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <sc-for list="{{ d14Checks }}" as="item" hint-placeholder-count="4">
+            <label onClick="{{ item.onClick }}" style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid oklch(0.92 0.006 80);border-radius:10px;cursor:pointer;user-select:none;">
+              <span style="{{ item.boxStyle }}">✓</span>
+              <span style="{{ item.labelStyle }}">{{ item.label }}</span>
+            </label>
+          </sc-for>
+        </div>
+      </div>
+    </article>
+    </sc-if>
+
+    <!-- ============ DAY 30 ============ -->
+    <sc-if value="{{ isD30 }}" hint-placeholder-val="{{ false }}">
+    <article>
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:8px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:64px;font-weight:500;line-height:1;color:oklch(0.62 0.13 95);">30</span>
+        <div>
+          <div style="font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;color:oklch(0.55 0.13 95);text-transform:uppercase;">30日目</div>
+          <h2 style="font-size:28px;font-weight:900;margin:2px 0 0;color:oklch(0.22 0.01 60);">自動化とチーム運用</h2>
+        </div>
+      </div>
+      <p style="font-size:16px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0 0 8px;">対話だけでなく、スクリプトや CI に組み込み、チームで使いこなす段階。ここまで来れば立派な Claude Code ユーザーです。</p>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.62 0.13 95);"></span>1. スクリプトから呼び出す（ヘッドレス）</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;"><code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">-p</code> オプションで、対話画面を開かずに一発で実行できます。シェルスクリプトや CI に組み込めます。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">claude -p "READMEを最新のコードに合わせて更新して"</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.62 0.13 95);"></span>2. モデルを使い分ける</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;">難しい設計は高性能モデル、軽い作業は速いモデル、と <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">/model</code> で切り替えると、速度とコストのバランスが取れます。</p>
+      <div style="display:flex;align-items:center;gap:10px;background:oklch(0.2 0.01 60);border-radius:10px;padding:12px 14px;margin:12px 0;">
+        <code style="flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;color:oklch(0.95 0.01 90);white-space:pre-wrap;word-break:break-all;">/model</code>
+        <button onClick="{{ copyCmd }}" style="flex-shrink:0;font-family:'Noto Sans JP',sans-serif;font-size:12px;color:oklch(0.85 0.01 90);background:oklch(0.32 0.01 60);border:none;border-radius:7px;padding:7px 12px;cursor:pointer;">コピー</button>
+      </div>
+
+      <h3 style="font-size:18px;font-weight:700;margin:34px 0 6px;color:oklch(0.25 0.01 60);display:flex;align-items:center;gap:10px;"><span style="width:6px;height:6px;border-radius:50%;background:oklch(0.62 0.13 95);"></span>3. チームで設定を共有する</h3>
+      <p style="font-size:15px;line-height:1.85;color:oklch(0.45 0.01 60);margin:0;"><code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">CLAUDE.md</code> や <code style="font-family:'JetBrains Mono',monospace;font-size:13px;background:oklch(0.95 0.01 70);padding:2px 6px;border-radius:5px;">.claude/commands/</code> をリポジトリにコミットすれば、チーム全員が同じルール・同じコマンドで作業できます。オンボーディングも一気に楽に。</p>
+
+      <div style="margin-top:30px;background:oklch(0.97 0.03 95);border-left:3px solid oklch(0.62 0.13 95);border-radius:10px;padding:16px 20px;">
+        <div style="font-size:13px;font-weight:700;color:oklch(0.5 0.12 95);margin-bottom:6px;">💡 30日目のコツ</div>
+        <p style="font-size:14.5px;line-height:1.8;color:oklch(0.4 0.02 50);margin:0;">大きなタスクは「TODOリストを作って一つずつ進めて」と頼むと、進捗が見えて抜け漏れが減ります。長時間の作業でも迷子になりません。</p>
+      </div>
+
+      <div style="margin-top:36px;padding:22px;background:#fff;border:1px solid oklch(0.92 0.006 80);border-radius:14px;">
+        <div style="font-size:15px;font-weight:700;margin-bottom:14px;color:oklch(0.28 0.01 60);">30日目のチェックリスト</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <sc-for list="{{ d30Checks }}" as="item" hint-placeholder-count="4">
+            <label onClick="{{ item.onClick }}" style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid oklch(0.92 0.006 80);border-radius:10px;cursor:pointer;user-select:none;">
+              <span style="{{ item.boxStyle }}">✓</span>
+              <span style="{{ item.labelStyle }}">{{ item.label }}</span>
+            </label>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="margin-top:40px;padding:28px;background:oklch(0.22 0.01 60);border-radius:16px;text-align:center;">
+        <div style="font-size:15px;font-weight:700;color:oklch(0.85 0.05 95);margin-bottom:6px;">🎉 30日間おつかれさまでした</div>
+        <p style="font-size:14px;line-height:1.8;color:oklch(0.75 0.01 90);margin:0;max-width:520px;margin:0 auto;">ここまで来れば、Claude Code はあなたの開発フローの一部です。あとは実際のプロジェクトで使い込みながら、自分だけの CLAUDE.md とコマンド集を育てていきましょう。</p>
+      </div>
+    </article>
+    </sc-if>
+
+  </main>
+
+  <footer style="border-top:1px solid oklch(0.93 0.006 80);padding:28px;text-align:center;">
+    <p style="font-size:12.5px;color:oklch(0.6 0.01 60);margin:0;font-family:'JetBrains Mono',monospace;">Claude Code Getting Started Guide · 学習の進捗はこの端末に保存されます</p>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { activeDay: 'd1', checked: {} };
+
+  componentDidMount() {
+    try {
+      const saved = JSON.parse(localStorage.getItem('ccguide_checks') || '{}');
+      if (saved && typeof saved === 'object') this.setState({ checked: saved });
+    } catch (e) {}
+  }
+
+  CHECKS = {
+    d1: [
+      { key: 'd1a', label: 'Claude Code をインストールした' },
+      { key: 'd1b', label: 'プロジェクトのルートで claude を起動できた' },
+      { key: 'd1c', label: 'ログインを完了した' },
+      { key: 'd1d', label: 'コードベースについて質問して答えをもらった' },
+    ],
+    d3: [
+      { key: 'd3a', label: '/help でコマンド一覧を確認した' },
+      { key: 'd3b', label: '/clear で会話をリセットした' },
+      { key: 'd3c', label: '提案された差分を読んでから承認した' },
+      { key: 'd3d', label: 'タスクを小さく区切って依頼した' },
+    ],
+    d7: [
+      { key: 'd7a', label: '/init で CLAUDE.md を作成した' },
+      { key: 'd7b', label: 'CLAUDE.md にプロジェクトのルールを書いた' },
+      { key: 'd7c', label: '/permissions で権限を確認・調整した' },
+      { key: 'd7d', label: '「計画→実行」の流れで依頼した' },
+    ],
+    d14: [
+      { key: 'd14a', label: 'コミットを Claude に任せた' },
+      { key: 'd14b', label: '/mcp で接続状況を確認した' },
+      { key: 'd14c', label: '.claude/commands に自分用コマンドを作った' },
+      { key: 'd14d', label: '画像やスクショを貼って依頼した' },
+    ],
+    d30: [
+      { key: 'd30a', label: 'claude -p でヘッドレス実行した' },
+      { key: 'd30b', label: '/model でモデルを使い分けた' },
+      { key: 'd30c', label: 'CLAUDE.md をリポジトリにコミットして共有した' },
+      { key: 'd30d', label: 'TODOリスト方式で大きなタスクを進めた' },
+    ],
+  };
+
+  TABS = [
+    { id: 'd1', day: '1', theme: 'とにかく動かす', hue: 40 },
+    { id: 'd3', day: '3', theme: '基本操作', hue: 155 },
+    { id: 'd7', day: '7', theme: '設定する', hue: 255 },
+    { id: 'd14', day: '14', theme: 'ワークフロー', hue: 320 },
+    { id: 'd30', day: '30', theme: '自動化・チーム', hue: 95 },
+  ];
+
+  selectDay = (id) => this.setState({ activeDay: id });
+
+  toggle = (key) => {
+    this.setState((s) => {
+      const checked = { ...s.checked, [key]: !s.checked[key] };
+      try { localStorage.setItem('ccguide_checks', JSON.stringify(checked)); } catch (e) {}
+      return { checked };
+    });
+  };
+
+  copyCmd = (e) => {
+    const btn = e.currentTarget;
+    const code = btn.parentElement.querySelector('code');
+    if (!code) return;
+    const text = code.textContent;
+    const done = () => {
+      const orig = btn.textContent;
+      btn.textContent = 'コピー済み ✓';
+      setTimeout(() => { btn.textContent = orig; }, 1400);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(() => {});
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (err) {}
+      document.body.removeChild(ta);
+    }
+  };
+
+  buildChecks(dayId) {
+    return this.CHECKS[dayId].map((it) => {
+      const on = !!this.state.checked[it.key];
+      return {
+        key: it.key,
+        label: it.label,
+        onClick: () => this.toggle(it.key),
+        boxStyle: {
+          flexShrink: 0, width: '22px', height: '22px', borderRadius: '6px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: '13px', fontWeight: 700, lineHeight: 1,
+          border: on ? '1px solid oklch(0.6 0.15 40)' : '1px solid oklch(0.82 0.01 70)',
+          background: on ? 'oklch(0.6 0.15 40)' : '#fff',
+          color: on ? '#fff' : 'transparent',
+          transition: 'all 0.15s ease',
+        },
+        labelStyle: {
+          fontSize: '14.5px', lineHeight: 1.55,
+          color: on ? 'oklch(0.55 0.02 60)' : 'oklch(0.32 0.01 60)',
+          textDecoration: on ? 'line-through' : 'none',
+        },
+      };
+    });
+  }
+
+  renderVals() {
+    const active = this.state.activeDay;
+    const tabs = this.TABS.map((t) => {
+      const isActive = t.id === active;
+      return {
+        ...t,
+        onClick: () => this.selectDay(t.id),
+        style: {
+          flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-start',
+          gap: '2px', padding: '9px 16px', borderRadius: '10px', cursor: 'pointer',
+          fontFamily: "'Noto Sans JP', sans-serif", textAlign: 'left',
+          border: isActive ? `1px solid oklch(0.7 0.1 ${t.hue})` : '1px solid transparent',
+          background: isActive ? `oklch(0.96 0.04 ${t.hue})` : 'transparent',
+          color: isActive ? `oklch(0.42 0.13 ${t.hue})` : 'oklch(0.5 0.01 60)',
+          transition: 'all 0.15s ease',
+        },
+      };
+    });
+
+    const all = Object.values(this.CHECKS).flat();
+    const total = all.length;
+    const done = all.filter((it) => this.state.checked[it.key]).length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+
+    return {
+      tabs,
+      isD1: active === 'd1', isD3: active === 'd3', isD7: active === 'd7',
+      isD14: active === 'd14', isD30: active === 'd30',
+      progress: { done, total, pct },
+      copyCmd: this.copyCmd,
+      d1Checks: this.buildChecks('d1'),
+      d3Checks: this.buildChecks('d3'),
+      d7Checks: this.buildChecks('d7'),
+      d14Checks: this.buildChecks('d14'),
+      d30Checks: this.buildChecks('d30'),
+    };
+  }
+}
+</script>
+</body>
+</html>
