@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+</style>
+</helmet>
+<div style="min-height:100vh; background:#0e1117; color:#e6e8ec; font-family:'Noto Sans JP',system-ui,sans-serif; padding:48px 56px 64px;">
+  <header style="max-width:1520px; margin:0 auto 40px; border-bottom:1px solid #232833; padding-bottom:24px;">
+    <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;">
+      <h1 style="margin:0; font-size:30px; font-weight:700; letter-spacing:-0.01em;">2026 MLB 順位推移</h1>
+      <span style="font-family:'Roboto Mono',monospace; font-size:13px; color:#8b93a1; letter-spacing:0.02em;">OPENING DAY — JUL 18, 2026</span>
+    </div>
+    <p style="margin:10px 0 0; font-size:14px; color:#8b93a1; line-height:1.6; max-width:760px;">
+      ア・リーグ / ナ・リーグの6地区、地区内順位（1位が上）の推移。縦軸=順位、横軸=日付。
+    </p>
+  </header>
+
+  <div style="max-width:1520px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:28px;">
+    <section style="background:#151a22; border:1px solid #232833; border-radius:14px; padding:22px 22px 18px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+        <span style="width:8px; height:8px; border-radius:2px; background:#c9384a;"></span>
+        <h2 style="margin:0; font-size:16px; font-weight:700;">ア・リーグ 東地区</h2>
+      </div>
+      {{ svgALE }}
+    </section>
+    <section style="background:#151a22; border:1px solid #232833; border-radius:14px; padding:22px 22px 18px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+        <span style="width:8px; height:8px; border-radius:2px; background:#c9384a;"></span>
+        <h2 style="margin:0; font-size:16px; font-weight:700;">ア・リーグ 中地区</h2>
+      </div>
+      {{ svgALC }}
+    </section>
+    <section style="background:#151a22; border:1px solid #232833; border-radius:14px; padding:22px 22px 18px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+        <span style="width:8px; height:8px; border-radius:2px; background:#c9384a;"></span>
+        <h2 style="margin:0; font-size:16px; font-weight:700;">ア・リーグ 西地区</h2>
+      </div>
+      {{ svgALW }}
+    </section>
+    <section style="background:#151a22; border:1px solid #232833; border-radius:14px; padding:22px 22px 18px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+        <span style="width:8px; height:8px; border-radius:2px; background:#2f6fb0;"></span>
+        <h2 style="margin:0; font-size:16px; font-weight:700;">ナ・リーグ 東地区</h2>
+      </div>
+      {{ svgNLE }}
+    </section>
+    <section style="background:#151a22; border:1px solid #232833; border-radius:14px; padding:22px 22px 18px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+        <span style="width:8px; height:8px; border-radius:2px; background:#2f6fb0;"></span>
+        <h2 style="margin:0; font-size:16px; font-weight:700;">ナ・リーグ 中地区</h2>
+      </div>
+      {{ svgNLC }}
+    </section>
+    <section style="background:#151a22; border:1px solid #232833; border-radius:14px; padding:22px 22px 18px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+        <span style="width:8px; height:8px; border-radius:2px; background:#2f6fb0;"></span>
+        <h2 style="margin:0; font-size:16px; font-weight:700;">ナ・リーグ 西地区</h2>
+      </div>
+      {{ svgNLW }}
+    </section>
+  </div>
+
+  <footer style="max-width:1520px; margin:36px auto 0; font-size:12px; color:#5c6572; line-height:1.6; font-family:'Roboto Mono',monospace;">
+    ※ 終点順位は 2026-07-18 時点の実際の地区順位。開幕からの推移は暫定サンプル（実データ受領後に差し替え）。
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  // ---- seeded RNG ----
+  mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+  divisions(){
+    return {
+      ALE:{seed:11, teams:[
+        {jp:'レイズ', c:'#4CA5D6', end:1},
+        {jp:'ヤンキース', c:'#c9c9cf', end:2},
+        {jp:'ブルージェイズ', c:'#1D6DC1', end:3},
+        {jp:'レッドソックス', c:'#C8102E', end:4},
+        {jp:'オリオールズ', c:'#F4632E', end:5},
+      ]},
+      ALC:{seed:22, teams:[
+        {jp:'ホワイトソックス', c:'#aeb4bf', end:1},
+        {jp:'ガーディアンズ', c:'#D1495B', end:2},
+        {jp:'ツインズ', c:'#8f6dc0', end:3},
+        {jp:'タイガース', c:'#E08E45', end:4},
+        {jp:'ロイヤルズ', c:'#2478CC', end:5},
+      ]},
+      ALW:{seed:33, teams:[
+        {jp:'レンジャーズ', c:'#3B7DD8', end:1},
+        {jp:'アストロズ', c:'#EB6E1F', end:2},
+        {jp:'マリナーズ', c:'#2BB0A6', end:3},
+        {jp:'エンゼルス', c:'#C41E3A', end:4},
+        {jp:'アスレチックス', c:'#4C9A5C', end:5},
+      ]},
+      NLE:{seed:44, teams:[
+        {jp:'ブレーブス', c:'#CE1141', end:1},
+        {jp:'フィリーズ', c:'#9a6fd0', end:2},
+        {jp:'メッツ', c:'#FF5910', end:3},
+        {jp:'マーリンズ', c:'#00A3E0', end:4},
+        {jp:'ナショナルズ', c:'#8892a3', end:5},
+      ]},
+      NLC:{seed:55, teams:[
+        {jp:'ブルワーズ', c:'#C9A227', end:1},
+        {jp:'カブス', c:'#3562C6', end:2},
+        {jp:'カージナルス', c:'#E0457B', end:3},
+        {jp:'レッズ', c:'#C6011F', end:4},
+        {jp:'パイレーツ', c:'#b6bcc7', end:5},
+      ]},
+      NLW:{seed:66, teams:[
+        {jp:'ドジャース', c:'#2E7FCB', end:1},
+        {jp:'パドレス', c:'#C0A062', end:2},
+        {jp:'ジャイアンツ', c:'#FD5A1E', end:3},
+        {jp:'ダイヤモンドバックス', c:'#D62245', end:4},
+        {jp:'ロッキーズ', c:'#8f6dc0', end:5},
+      ]},
+    };
+  }
+
+  // opening day 2026-03-26 -> 2026-07-18 ; weekly points
+  buildSeries(div){
+    const rand = this.mulberry32(div.seed);
+    const T = 16; // segments
+    const totalDays = 114;
+    const n = div.teams.length;
+    // random walk score per team + trend toward end rank
+    const walks = div.teams.map(()=>({v:0}));
+    const series = div.teams.map(()=>[]);
+    for(let t=0;t<=T;t++){
+      const frac = t/T;
+      const scores = div.teams.map((tm,i)=>{
+        walks[i].v += (rand()-0.5)*1.4;
+        const trend = (n - tm.end) * frac * 3.2; // higher = better (lower rank number)
+        return {i, s: trend + walks[i].v + (rand()-0.5)*0.6};
+      });
+      scores.sort((a,b)=> b.s - a.s); // best first
+      scores.forEach((sc, idx)=>{ series[sc.i][t] = idx+1; }); // rank 1..n
+    }
+    // force exact final ranks
+    div.teams.forEach((tm,i)=>{ series[i][T] = tm.end; });
+    return {series, T, totalDays};
+  }
+
+  makeChart(key){
+    const div = this.divisions()[key];
+    const {series, T, totalDays} = this.buildSeries(div);
+    const h = React.createElement;
+    const W=430, H=300;
+    const m={t:14,r:118,b:34,l:30};
+    const pw=W-m.l-m.r, ph=H-m.t-m.b;
+    const n=div.teams.length;
+    const xOf = t => m.l + (t/T)*pw;
+    const yOf = r => m.t + ((r-1)/(n-1))*ph;
+
+    const grid=[];
+    for(let r=1;r<=n;r++){
+      grid.push(h('line',{key:'g'+r,x1:m.l,x2:m.l+pw,y1:yOf(r),y2:yOf(r),stroke:'#232833',strokeWidth:1}));
+      grid.push(h('text',{key:'gl'+r,x:m.l-9,y:yOf(r)+4,fill:'#5c6572',fontSize:11,textAnchor:'end',fontFamily:'Roboto Mono, monospace'}, r));
+    }
+    // month ticks: Apr1=6d, May1=36, Jun1=67, Jul1=97 -> t index = day/ (totalDays/T)
+    const months=[['4月',6],['5月',36],['6月',67],['7月',97]];
+    const ticks=months.map(([lbl,day],k)=>{
+      const t=(day/totalDays)*T;
+      const x=xOf(t);
+      return h('g',{key:'m'+k},
+        h('line',{x1:x,x2:x,y1:m.t,y2:m.t+ph,stroke:'#1b2029',strokeWidth:1}),
+        h('text',{x:x,y:H-14,fill:'#5c6572',fontSize:11,textAnchor:'middle',fontFamily:'Roboto Mono, monospace'},lbl)
+      );
+    });
+
+    const lines=div.teams.map((tm,i)=>{
+      const pts=series[i].map((r,t)=>`${xOf(t)},${yOf(r)}`).join(' ');
+      return h('polyline',{key:'p'+i,points:pts,fill:'none',stroke:tm.c,strokeWidth:2.4,strokeLinejoin:'round',strokeLinecap:'round',opacity:0.95});
+    });
+    const dots=div.teams.map((tm,i)=>{
+      const r=series[i][T];
+      return h('circle',{key:'d'+i,cx:xOf(T),cy:yOf(r),r:3.4,fill:tm.c,stroke:'#151a22',strokeWidth:1.5});
+    });
+    const labels=div.teams.map((tm,i)=>{
+      const r=series[i][T];
+      return h('g',{key:'lb'+i},
+        h('text',{x:xOf(T)+10,y:yOf(r)+4,fill:tm.c,fontSize:12.5,fontWeight:600,fontFamily:'Noto Sans JP, sans-serif'}, `${r}. ${tm.jp}`)
+      );
+    });
+
+    return h('svg',{viewBox:`0 0 ${W} ${H}`,width:'100%',style:{display:'block',overflow:'visible'}},
+      ...grid, ...ticks, ...lines, ...dots, ...labels
+    );
+  }
+
+  renderVals(){
+    return {
+      svgALE:this.makeChart('ALE'),
+      svgALC:this.makeChart('ALC'),
+      svgALW:this.makeChart('ALW'),
+      svgNLE:this.makeChart('NLE'),
+      svgNLC:this.makeChart('NLC'),
+      svgNLW:this.makeChart('NLW'),
+    };
+  }
+}
+</script>
+</body>
+</html>
