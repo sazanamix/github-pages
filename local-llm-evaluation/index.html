@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ローカルLLM導入・評価ノート</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg:#0b0c0e;
+    --bg-soft:#131418;
+    --surface:#15171c;
+    --border:#22242a;
+    --text:#eceae4;
+    --text-dim:#8b8d94;
+    --muted:#5f636d;
+    --accent:#7fe0c4;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Noto Sans JP',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+
+  .glow{
+    position:fixed; inset:0;
+    background:radial-gradient(700px 400px at 15% -10%, rgba(127,224,196,.12), transparent 60%),
+               radial-gradient(600px 500px at 100% 10%, rgba(127,224,196,.06), transparent 60%);
+    pointer-events:none;
+  }
+
+  .wrap{position:relative; max-width:820px; margin:0 auto; padding:min(10vh,90px) 28px 90px}
+
+  .tag{
+    font:500 12px/1 'JetBrains Mono',monospace;
+    letter-spacing:.28em; text-transform:uppercase;
+    color:var(--text-dim); margin-bottom:20px;
+  }
+
+  h1{
+    font-size:clamp(30px,5.2vw,46px);
+    font-weight:900; letter-spacing:-.02em; margin:0 0 18px; line-height:1.15;
+    text-wrap:balance;
+    background:linear-gradient(135deg,#fff 0%,var(--accent) 120%);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  p.lead{font-size:15.5px;line-height:1.9;color:var(--text-dim);margin:0 0 20px}
+
+  .stats{display:flex;gap:28px;margin:30px 0 56px;flex-wrap:wrap}
+  .stat b{display:block;font:700 22px/1 'JetBrains Mono',monospace;color:var(--text);white-space:nowrap}
+  .stat span{font:500 11px/1 'JetBrains Mono',monospace;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase}
+
+  .section-label{
+    font:600 11px/1 'JetBrains Mono',monospace; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--text-dim); margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .section-label::after{content:"";flex:1;height:1px;background:var(--border)}
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px; margin-bottom:56px}
+
+  /* env table */
+  .env-table{width:100%;border-collapse:collapse;font-size:13.5px}
+  .env-table th{
+    text-align:left; padding:10px 14px 10px 0; font:600 10.5px 'JetBrains Mono',monospace;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--text-dim); white-space:nowrap; width:1%;
+    border-bottom:1px solid var(--border); vertical-align:top;
+  }
+  .env-table td{padding:10px 0; border-bottom:1px solid rgba(255,255,255,.04); line-height:1.6}
+  .env-table tr:last-child th, .env-table tr:last-child td{border-bottom:none}
+
+  /* verdict findings */
+  .findings{display:flex;flex-direction:column;gap:0}
+  .finding{padding:22px 0;border-bottom:1px solid var(--border);display:flex;gap:20px}
+  .finding:last-child{border-bottom:none;padding-bottom:0}
+  .finding:first-child{padding-top:0}
+  .finding-mark{
+    flex:none; width:34px; height:34px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font:700 13px 'JetBrains Mono',monospace;
+    background:rgba(127,224,196,.08); color:var(--accent); border:1px solid rgba(127,224,196,.25);
+  }
+  .finding.weak .finding-mark{background:rgba(230,103,103,.08); color:#e69a9a; border-color:rgba(230,103,103,.25)}
+  .finding.ok .finding-mark{background:rgba(127,224,196,.1); color:var(--accent); border-color:rgba(127,224,196,.3)}
+  .finding-body h3{margin:0 0 6px;font-size:15.5px;font-weight:700;letter-spacing:-.005em}
+  .finding-body p{margin:0;font-size:13.5px;line-height:1.8;color:var(--text-dim)}
+  .finding-body .verdict{
+    display:inline-block;margin-top:10px;font:500 10.5px/1 'JetBrains Mono',monospace;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim);
+    padding:4px 9px;border-radius:20px;border:1px solid var(--border);
+  }
+
+  /* insight list (総評 / 今後試したいこと) */
+  .insights{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+  .insights li{padding-left:22px;position:relative;font-size:14.5px;line-height:1.85;color:var(--text-dim)}
+  .insights li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:700}
+  .insights b{color:var(--text)}
+
+  footer{position:relative; text-align:center; padding:32px; font:400 11.5px/1 'JetBrains Mono',monospace; color:var(--text-dim); border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+
+<div class="wrap">
+  <div class="tag">local llm · 個人検証ノート ・ 2026-07-23 時点</div>
+  <h1>ローカルLLM導入・評価<br>(LM Studio + AnythingLLM)</h1>
+  <p class="lead">手元のゲーミングPCにローカルLLM環境を構築し、Web検索・RAG(文書参照)・通常の質疑応答・コーディング支援の4観点で動作を検証した記録です。VRAM 8GBというミドルクラスの環境でどこまで実用に耐えるかを中心に見ています。</p>
+
+  <div class="stats">
+    <div class="stat"><b>RTX 2070</b><span>GPU・VRAM 8GB</span></div>
+    <div class="stat"><b>64GB</b><span>System RAM</span></div>
+    <div class="stat"><b>14B</b><span>使用モデル規模</span></div>
+    <div class="stat"><b>Q4_K_M</b><span>量子化形式</span></div>
+  </div>
+
+  <div class="section-label">検証環境</div>
+  <div class="card">
+    <table class="env-table">
+      <tr><th>CPU</th><td>Intel Core i9-9900K</td></tr>
+      <tr><th>GPU</th><td>NVIDIA GeForce RTX 2070(VRAM 8GB)</td></tr>
+      <tr><th>RAM</th><td>64GB</td></tr>
+      <tr><th>OS</th><td>Windows 11 Pro</td></tr>
+      <tr><th>使用ツール</th><td>LM Studio + AnythingLLM</td></tr>
+      <tr><th>使用モデル</th><td>Qwen2.5-14B-Instruct(Q4_K_M量子化)</td></tr>
+    </table>
+  </div>
+
+  <div class="section-label">評価結果</div>
+  <div class="card">
+    <div class="findings">
+      <div class="finding weak">
+        <div class="finding-mark">01</div>
+        <div class="finding-body">
+          <h3>Web検索(AnythingLLM Agent機能)</h3>
+          <p>Webからの検索自体は実行できたが、質問に対して直接的な回答ではなく「リンク先を参照してください」という案内的な回答になるケースがあった。また、ハルシネーション(誤情報の生成)も発生した。</p>
+          <span class="verdict">Fragile</span>
+        </div>
+      </div>
+      <div class="finding weak">
+        <div class="finding-mark">02</div>
+        <div class="finding-body">
+          <h3>RAG(ローカル文書参照)</h3>
+          <p>登録した情報を参照した回答が得られないケースがあった。資料をフルパスで指定して質問した場合は回答は得られたが、その内容にはハルシネーションが発生した。</p>
+          <span class="verdict">Fragile</span>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-mark">03</div>
+        <div class="finding-body">
+          <h3>通常質問</h3>
+          <p>テスト観点についての質問には回答が得られたが、内容は浅めだった。</p>
+          <span class="verdict">Usable</span>
+        </div>
+      </div>
+      <div class="finding ok">
+        <div class="finding-mark">04</div>
+        <div class="finding-body">
+          <h3>コーディング</h3>
+          <p>基本関数・アルゴリズム・デバッグ・実践タスク・リファクタリングの5種類のコード生成テストには、いずれも正常に回答された。エージェント型AIではないため、提示されたコードは自身でコピー&amp;実行する必要があるが、単一ファイル規模のコード相談には問題なく使えそうという印象。</p>
+          <span class="verdict">Solid</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">総評</div>
+  <div class="card">
+    <ul class="insights">
+      <li><b>最新情報が必要なものや、RAGによる文書参照は厳しそうな印象。</b>Web検索・RAGともに、回答の正確性より「動くには動くが信頼しきれない」という段階だった。</li>
+      <li><b>一方で、コーディングに関する質疑には使える手応えがあった。</b>単一ファイル規模であれば実用レベル。</li>
+      <li><b>未検証だが、議事録やメモの要約用途にも使えそうな見込みがある。</b>今後の検証候補としたい。</li>
+      <li>総合すると、<b>リモートAI(クラウド型AI)が使用できる環境ではそちらを優先し、使用できない環境に限ってローカルLLMを検討する</b>、という位置づけが現実的だと感じた。</li>
+    </ul>
+  </div>
+
+  <div class="section-label">今後試したいこと</div>
+  <div class="card">
+    <ul class="insights">
+      <li>AIのメモリー機能</li>
+      <li>PCの性能をアップグレードして別のモデルを試す</li>
+      <li>画像・動画・音楽解析のテスト</li>
+    </ul>
+  </div>
+</div>
+
+<footer>© sazanamix ・ 個人環境での検証結果であり、モデルやツールのバージョンにより結果は変動します</footer>
+</body>
+</html>
