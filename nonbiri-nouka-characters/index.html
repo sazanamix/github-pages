@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>大樹の村 人物名鑑 | 異世界のんびり農家</title>
+<meta name="description" content="『異世界のんびり農家』全1046話から抽出した登場人物・種族の非公式ファン資料です。">
+<style>
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6efe0;
+      --bg-soft: #efe6d2;
+      --ink: #2a2318;
+      --ink-soft: #5c5136;
+      --line: #cdbf9c;
+      --card: #fffcf4;
+      --accent: #3f6b3f;
+      --accent-soft: #dce9d6;
+      --accent2: #a85a1e;
+      --accent2-soft: #f1ddc4;
+      --shadow: rgba(60, 46, 15, 0.12);
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a160e;
+      --bg-soft: #221c12;
+      --ink: #ecdfc0;
+      --ink-soft: #b9a97e;
+      --line: #4a3f28;
+      --card: #241e13;
+      --accent: #8fc98f;
+      --accent-soft: #2a3a26;
+      --accent2: #e2924f;
+      --accent2-soft: #3a2a18;
+      --shadow: rgba(0, 0, 0, 0.4);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f6efe0; --bg-soft: #efe6d2; --ink: #2a2318; --ink-soft: #5c5136;
+    --line: #cdbf9c; --card: #fffcf4; --accent: #3f6b3f; --accent-soft: #dce9d6;
+    --accent2: #a85a1e; --accent2-soft: #f1ddc4; --shadow: rgba(60, 46, 15, 0.12);
+  }
+  :root[data-theme="dark"] {
+    --bg: #1a160e; --bg-soft: #221c12; --ink: #ecdfc0; --ink-soft: #b9a97e;
+    --line: #4a3f28; --card: #241e13; --accent: #8fc98f; --accent-soft: #2a3a26;
+    --accent2: #e2924f; --accent2-soft: #3a2a18; --shadow: rgba(0, 0, 0, 0.4);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px 80px; }
+
+  h1, h2, h3, .display {
+    font-family: "Iowan Old Style", "Palatino Linotype", "Hiragino Mincho ProN", "Noto Serif JP", Georgia, serif;
+    text-wrap: balance;
+  }
+
+  /* ---------- header ---------- */
+  header.top {
+    position: sticky; top: 0; z-index: 40;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .top-inner {
+    max-width: 1180px; margin: 0 auto; padding: 12px 20px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: baseline; gap: 10px; flex: 0 0 auto; }
+  .brand .mark { font-size: 1.4rem; }
+  .brand .title { font-family: "Iowan Old Style","Palatino Linotype",Georgia,serif; font-weight: 700; font-size: 1.05rem; letter-spacing: 0.02em; }
+  .brand .sub { font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.08em; }
+  .searchbox { flex: 1 1 240px; position: relative; }
+  .searchbox input {
+    width: 100%; padding: 9px 14px 9px 34px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    font-size: 0.92rem; outline: none;
+  }
+  .searchbox input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .searchbox::before {
+    content: "◎"; position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    color: var(--ink-soft); font-size: 0.85rem; pointer-events: none;
+  }
+  #count { font-size: 0.78rem; color: var(--ink-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 42px 0 22px; border-bottom: 1px solid var(--line); margin-bottom: 30px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent2); font-weight: 600; margin-bottom: 14px;
+  }
+  .eyebrow::before { content: "🌾"; font-size: 0.9rem; }
+  .hero h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); margin: 0 0 12px; line-height: 1.15; }
+  .hero p.lead { max-width: 100%; color: var(--ink-soft); font-size: 1.02rem; margin: 0 0 18px; }
+  .stat-row { display: flex; gap: 26px; flex-wrap: wrap; margin-top: 18px; }
+  .stat { border-left: 2px solid var(--accent2); padding-left: 12px; }
+  .stat b { display: block; font-family: "Iowan Old Style","Palatino Linotype",Georgia,serif; font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 0.74rem; color: var(--ink-soft); letter-spacing: 0.03em; }
+  details.note { margin-top: 20px; font-size: 0.86rem; color: var(--ink-soft); }
+  details.note summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+  details.note div { margin-top: 8px; max-width: 100%; }
+
+  /* ---------- toc chips ---------- */
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 34px; }
+  .toc a {
+    font-size: 0.8rem; padding: 6px 13px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--ink-soft); text-decoration: none;
+    background: var(--card); transition: all .15s ease;
+  }
+  .toc a:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- sections ---------- */
+  section.grp { margin-bottom: 22px; scroll-margin-top: 76px; }
+  details.grp-body { border: 1px solid var(--line); border-radius: 14px; background: var(--bg-soft); overflow: hidden; }
+  summary.grp-head {
+    list-style: none; cursor: pointer; padding: 16px 20px;
+    display: flex; align-items: center; gap: 14px; justify-content: space-between;
+  }
+  summary.grp-head::-webkit-details-marker { display: none; }
+  .grp-head .left { display: flex; align-items: center; gap: 12px; }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; flex: 0 0 auto; }
+  .grp-head h2 { margin: 0; font-size: 1.15rem; }
+  .grp-head .ct { font-size: 0.76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .grp-head .chev { color: var(--ink-soft); transition: transform .2s ease; font-size: 0.8rem; }
+  details[open] > summary.grp-head .chev { transform: rotate(90deg); }
+  .grp-desc { padding: 0 20px 14px; margin: -6px 0 0; color: var(--ink-soft); font-size: 0.88rem; max-width: 100%; }
+
+  .cards { padding: 4px 20px 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 13px 15px 14px; position: relative; box-shadow: 0 1px 2px var(--shadow);
+  }
+  .card .tag {
+    position: absolute; top: 0; right: 12px; width: 8px; height: 20px;
+    border-radius: 0 0 3px 3px;
+  }
+  .card h3 { margin: 0 0 3px; font-size: 1rem; padding-right: 14px; }
+  .card .role { font-size: 0.76rem; color: var(--accent2); font-weight: 600; margin-bottom: 6px; letter-spacing: 0.01em; }
+  .card p { margin: 0; font-size: 0.85rem; color: var(--ink-soft); }
+  .card .rel { margin-top: 7px; font-size: 0.76rem; color: var(--ink-soft); }
+  .card .rel b { color: var(--ink); font-weight: 600; }
+  .card.hidden { display: none; }
+
+  /* minor listing */
+  .minor-block { padding: 0 20px 22px; }
+  .minor-block h4 { font-size: 0.82rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; margin: 4px 0 10px; }
+  .minor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 6px 20px; }
+  .minor-item { font-size: 0.84rem; padding: 5px 0; border-bottom: 1px dotted var(--line); }
+  .minor-item.hidden { display: none; }
+  .minor-item b { color: var(--ink); }
+  .minor-item span.d { color: var(--ink-soft); }
+
+  .unnamed { margin: 46px 0 0; padding: 22px 24px; border: 1px dashed var(--line); border-radius: 14px; background: var(--bg-soft); }
+  .unnamed h2 { margin-top: 0; }
+  .unnamed ul { columns: 2; column-gap: 40px; padding-left: 20px; margin: 10px 0 0; font-size: 0.9rem; }
+  .unnamed li { margin-bottom: 6px; }
+  @media (max-width: 640px) { .unnamed ul { columns: 1; } }
+
+  footer.colophon {
+    margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-size: 0.78rem; color: var(--ink-soft);
+  }
+
+  #noresult { display: none; text-align: center; padding: 60px 20px; color: var(--ink-soft); }
+  #noresult.show { display: block; }
+
+  a { color: var(--accent); }
+  ::selection { background: var(--accent2-soft); }
+
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <span class="mark">🌾</span>
+      <span class="title">大樹の村 人物名鑑</span>
+      <span class="sub">『異世界のんびり農家』全1046話キャラクター資料</span>
+    </div>
+    <div class="searchbox">
+      <input id="search" type="text" placeholder="名前・種族・役割で検索(例: ルー / ドラゴン / 五村)" autocomplete="off">
+    </div>
+    <div id="count"></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="eyebrow">Character Almanac</span>
+    <h1>1046話から集めた、大樹の村の住人たち</h1>
+    <p class="lead">
+      内藤騎之介『異世界のんびり農家』全1046話のテキストを通読し、登場した人物・種族代表・使い魔・意思を持つ道具までを
+      種族・所属ごとに整理した非公式ファン資料です。作者公式の【登場人物表】シリーズ(第80・117・196・284・359・473・630・1002〜1006話)を
+      骨格に、残りの全話から抽出した情報で肉付けしています。
+    </p>
+    <div class="stat-row">
+      <div class="stat"><b>1046</b><span>収録話数</span></div>
+      <div class="stat"><b>約450</b><span>名前付きキャラクター</span></div>
+      <div class="stat"><b>21年+</b><span>物語が描く年月</span></div>
+      <div class="stat"><b>18</b><span>種族・陣営グループ</span></div>
+    </div>
+    <details class="note">
+      <summary>資料の作り方について</summary>
+      <div>
+        全1046話を58〜60話ずつ18のバッチに分割し、各バッチを個別に通読・抽出してから統合しました。
+        物語の中心を担う人物ほど詳しく、一度だけ登場する脇役は各セクション末の簡易リストにまとめています。
+        名前を持たない集団・種族は末尾に一覧化しました。作者の公式設定と矛盾する記述があれば、後の話数を優先しています。
+      </div>
+    </details>
+  </section>
+
+  <nav class="toc" id="toc"></nav>
+
+  <div id="sections"></div>
+
+  <div id="noresult">該当するキャラクターが見つかりませんでした。検索語を変えてお試しください。</div>
+
+  <div class="unnamed">
+    <h2>名前のない、けれど目立った集団・種族</h2>
+    <ul id="unnamed-list"></ul>
+  </div>
+
+  <footer class="colophon">
+    <p>
+      本資料はファンによる非公式まとめです。原作『異世界のんびり農家』(内藤騎之介 著)の権利は著作者に帰属します。
+      引用は要約・言及に留め、本文の再構成的な抜粋は避けています。誤り・見落としがあれば原作話数を確認のうえ更新してください。
+    </p>
+  </footer>
+</div>
+
+<script>
+/* ============ データ ============ */
+const GROUPS = [
+  { id:"family", name:"街尾火楽と、その家族", color:"#a85a1e", desc:"主人公・村長ヒラクと、彼を取り巻く配偶者・子供たち。物語全体を貫く核。" },
+  { id:"wolf", name:"インフェルノウルフ / フェンリル", color:"#6b4a2b", desc:"クロを始祖とする狼の一族。角のある大型犬サイズの魔獣で、村の護衛を担う。" },
+  { id:"spider", name:"デーモンスパイダー / アラクネ", color:"#4a3f6b", desc:"ザブトンを中心とする蜘蛛の一族。裁縫・警戒・工作を担う縫製職人集団。" },
+  { id:"vampire", name:"吸血鬼", color:"#8b1e3f", desc:"ルーとフローラ、そして始祖さんの血族。魔法と発酵食品研究の担い手。" },
+  { id:"angel", name:"天使族", color:"#3f6b8b", desc:"ガーレット王国出身、女性のみの種族。ティアとマルビットの一族。" },
+  { id:"elf", name:"ハイエルフ・山エルフ", color:"#3f8b5e", desc:"リアを代表とするハイエルフと、工作が得意な山エルフたち。" },
+  { id:"oni", name:"鬼人族", color:"#b0601f", desc:"アンを代表とする、村の家事全般を担うメイド集団。" },
+  { id:"lizard", name:"リザードマン", color:"#2f7a4f", desc:"ダガを代表とする力仕事担当の種族。" },
+  { id:"beast", name:"獣人族", color:"#8b5a2b", desc:"ハウリン村出身のセナ・ガルフ一族。犬耳と尾を持つ種族。" },
+  { id:"dragon", name:"ドラゴン族(神代竜族・混代竜族)", color:"#1e5a8b", desc:"竜王ドースの一族と、各地を統べる混代竜族。世界最強クラスの存在たち。" },
+  { id:"demon", name:"古の悪魔族", color:"#5a1e5a", desc:"グッチ・ヴェルサ・プラーダら、権能を持つ古い悪魔たちの一族。" },
+  { id:"mercury", name:"マーキュリー種(フォーグマ)・キッシンリー", color:"#6b6b1e", desc:"太陽城(四村)を運営する人工生命体たちと、その宿敵一族。" },
+  { id:"kitsune", name:"九尾狐・銀狐族", color:"#a8621e", desc:"五村を統べるヨウコと、後に合流する狐たちの一族。" },
+  { id:"pet", name:"猫・虎・その他の使い魔", color:"#7a4a1e", desc:"ライギエル一家、聖獣ソウゲツなど、村で愛される動物たち。" },
+  { id:"spirit", name:"妖精・精霊・神々", color:"#1e7a6b", desc:"妖精女王、氷の魔物、大ラナノーンなど、常識を超えた存在たち。" },
+  { id:"tool", name:"知恵を持つ道具", color:"#4a4a4a", desc:"意思を持つ箱・剣・人形・乗り物たち。" },
+  { id:"gomura", name:"五村・太陽城(四村)", color:"#8b3f1e", desc:"村長が関わる新興の村々を運営する人々。" },
+  { id:"maou", name:"魔王国・シャシャートの街", color:"#3f1e8b", desc:"魔王ガルガルドの国と、商都シャシャートの人々。" },
+  { id:"faraway", name:"王都・遠方諸国", color:"#1e3f8b", desc:"レイワイト王国、ケイルランド地域連合王国、六竜神国など遠方の国々。" },
+];
+
+const CH = (n) => `第${n}話`;
+
+const DATA = [
+/* ---------------- family ---------------- */
+{g:"family", name:"街尾火楽(まちお ひらく)", role:"主人公・大樹の村の村長", rel:"多数の妻と養子・子を持つ", d:"元日本人の異世界転移者。神から【万能農具】【健康な肉体】【人間が少ない環境】を授かり、死の森で開拓を始める。全編を通じて村・五村・六竜神国など複数の村の実質的な村長として物語の中心に立つ。本名は物語後半(第1026話)で「ヒラク」と確定。", first:1},
+{g:"family", name:"ルールーシー＝ルー", role:"吸血姫・村長の妻", rel:"フローラの従姉妹、アルフレート・ルプミリナの母", d:"賞金首として知られた大魔法使い。薬学・魔道具開発・転移門研究の第一人者で、万能船やゴーレム技術にも通じる。年齢(体格)を自在に変化させられる。", first:22},
+{g:"family", name:"ティア", role:"殲滅天使・村長の妻", rel:"ルィンシァの娘、ティゼル・オーロラの母", d:"「殲滅天使」の異名を持つ天使族の実力者。ルーの元ライバルで今はママ友。ゴーレム使いとして村の労働力を大きく支える。", first:26},
+{g:"family", name:"リア", role:"ハイエルフ代表・村長の妻", rel:"リリウスの母、リグネの娘", d:"200年前の戦乱で集落を失い放浪していたハイエルフの代表。建設・鍛冶・弓に精通する万能型。", first:28},
+{g:"family", name:"アン", role:"鬼人族メイド長・村長の妻", rel:"トライン・サクラの母", d:"鬼人族メイド団を統率する初期メンバー。当初は料理だけが苦手だったが村で腕を上げる。", first:41},
+{g:"family", name:"フローラ＝サクトゥ", role:"薬学者・村長の妻", rel:"ルーの従姉妹", d:"味噌・醤油・発酵食品研究の第一人者。「発酵食品の女王」と呼ばれ始める。治癒魔法の要でもある。", first:41},
+{g:"family", name:"セナ", role:"獣人族代表・村長の妻", rel:"ハウリン村長の娘、ガットの妹、セッテ・セットの母", d:"ハウリン村からの最初の移住者集団の代表。大樹の村の獣人族をまとめる。", first:50},
+{g:"family", name:"ラスティスムーン(ラスティ)", role:"ドラゴン種族代表・村長の妻", rel:"ドライムとグラッファルーンの娘、ラナノーン・ククルカンの母", d:"「狂竜」の異名を持つドラゴン。生活能力は皆無だが外交担当として村の顔役を務める。", first:57},
+{g:"family", name:"フラウレム(フラウ)", role:"村の代官・文官娘衆統括・村長の妻", rel:"ビーゼルの娘、フラシアベルの母", d:"魔王国四天王ビーゼルの娘。着任数日で農作業に馴染み、村の行政・経済を実質的に運営する。", first:59},
+{g:"family", name:"ハクレン", role:"ドラゴン(真竜)・村長の妻", rel:"ドースの長女、ヒイチロウ・ヒカル・ヒミコの母", d:"当初は妹ラスティへの嫉妬から村を襲撃したが和解し定住。子育てのため長く教師業を離れる。", first:68},
+{g:"family", name:"グランマリア", role:"皆殺し天使の一人・村長の妻", rel:"ラズマリアの娘、ローゼマリアの母", d:"クーデル・コローネと並ぶ「皆殺し天使」三人組の一人。ティアの補佐、村の上空警戒担当。", first:43},
+{g:"family", name:"クーデル", role:"皆殺し天使の一人・村長の妻", rel:"ララーデルの母", d:"急降下爆撃が大好き。クロの角を使った武装研究に積極的。", first:43},
+{g:"family", name:"コローネ", role:"皆殺し天使の一人・村長の妻", rel:"トルマーネの母", d:"三人組の中では個性を出したいと悩む場面も。上空警戒の常連。", first:43},
+{g:"family", name:"スアルリウ・スアルコウ", role:"双子天使・村長の妻", rel:"スアルロウの娘、それぞれスアルリナ・スアルコナを出産(第1037話)", d:"キアービットに誘われ移住した双子。お笑いのボケ・ツッコミ担当で悩む一面も。", first:185},
+{g:"family", name:"アルフレート(アルフレート＝マチオ)", role:"村長とルーの息子・吸血鬼", rel:"ティゼル・ウルザの弟(または兄)", d:"中二病を発症しつつ成長。物語後半、始祖さんの国(レイワイト王国)で自立を志し無人島開拓・商業組合支配など王として育つ。", first:57},
+{g:"family", name:"ティゼル", role:"村長とティアの娘・天使族", rel:"アルフレートの妹", d:"頭脳明晰で交渉・陰謀に強い。物語後半で人間の国々を統一し「ケイルランド地域連合王国」を建国する。", first:77},
+{g:"family", name:"ウルザ(ウルブラーザ)", role:"村長の養女・元死霊王", rel:"ハクレン・ザブトンが親代わり", d:"死霊王が浄化・転生した女児。剣の天才で、後に「英雄女王」的なカリスマで数千人の元盗賊・冒険者を従える。", first:147},
+{g:"family", name:"トライン", role:"村長とアンの息子・鬼人族", rel:"サクラの兄", d:"優秀さを見込まれ、天使族キアービットから将来の結婚を打診される。王都学園で執事修業中。", first:133},
+{g:"family", name:"ヒイチロウ", role:"村長とハクレンの息子・神代竜族", rel:"ヒカル・ヒミコの兄", d:"ドラゴン化に目覚め、暗黒竜の娘グラルに想いを寄せられる。祖母たちに溺愛される。", first:157},
+{g:"family", name:"リリウス・リグル・ラテ", role:"村長とハイエルフの息子たち", rel:"リア・リゼ・ラファの子", d:"三人同時に生まれたハイエルフのハーフ。剣術・弓を学び、五村周辺で単独訓練にも赴く。", first:135},
+{g:"family", name:"フラシアベル(フラシア)", role:"村長とフラウの娘・魔族", rel:"ビーゼルの孫", d:"太っているお腹が好きという独特の趣味を持つ。祖父ビーゼルとの「お父さん」呼びの取り合いも。", first:250},
+{g:"family", name:"セッテ・セット", role:"村長とセナの子・獣人族", rel:"姉妹(セッテが姉)", d:"セッテは第272話、セットは第856話に誕生。", first:272},
+{g:"family", name:"ルプミリナ・オーロラ", role:"村長の子供たち", rel:"ルプミリナはルーの娘、オーロラはティアの娘", d:"同じ第14年目秋に誕生した吸血鬼と天使族のハーフ。", first:379},
+{g:"family", name:"ローゼマリア・ララーデル・トルマーネ", role:"村長の子供たち・天使族", rel:"それぞれグランマリア・クーデル・コローネの娘", d:"皆殺し天使三人が生んだ次世代の天使族。", first:469},
+{g:"family", name:"ヒカル・ヒミコ", role:"村長とハクレンの双子・神代竜族", rel:"ヒイチロウの弟妹", d:"光と闇をまだ制御できず、父に近づくと発光/暗闇に包まれる特殊体質。", first:627},
+{g:"family", name:"ラナノーン(娘)・ククルカン", role:"村長とラスティの子・神代竜族", rel:"姉弟", d:"ラナノーンはドラゴン化を隠していた常識人。ククルカンは空飛ぶ絨毯がお気に入り。", first:643},
+{g:"family", name:"サクラ・ラムナ・セット", role:"村長の子供たち(第19年目誕生)", rel:"それぞれアン・ラムリアス・セナの子", d:"物語後半に誕生した新しい世代。", first:828},
+{g:"family", name:"ゴール・シール・ブロン", role:"村長の養子・獣人族", rel:"ハウリン村出身の獣人族の男の子三人組", d:"魔王国貴族学園に入学、教師に昇格。ゴールとシールはそれぞれ複数の妻を持ち大家族を築く。", first:361},
+
+/* ---------------- wolf ---------------- */
+{g:"wolf", name:"クロ", role:"インフェルノウルフ・エンペラー(群れの王)", rel:"ユキの夫、クロイチ〜クロヨンらの父", d:"物語最初期からの村の守護者。角のある大型犬サイズの狼で、群れの絶対的なリーダー。", first:6},
+{g:"wolf", name:"ユキ", role:"インフェルノウルフ・エンプレス", rel:"クロの妻", d:"トマト・イチゴ・サトウキビが好み。毎年のように子を産む。", first:6},
+{g:"wolf", name:"クロイチ・クロニ・クロサン・クロヨン", role:"クロとユキの第一世代の子", rel:"それぞれアリス・イリス・ウノ・エリスと対になる", d:"群れの中核を担う4頭。クロヨンはチェスの名手でマルビットの好敵手。", first:9},
+{g:"wolf", name:"アリス・イリス・ウノ・エリス", role:"クロイチ〜クロヨンのパートナー", rel:"上記4頭とそれぞれ対", d:"ウノのみオス。武闘会でも度々優勝するほどの実力者。", first:19},
+{g:"wolf", name:"フブキ", role:"コキュートスウルフ(特殊個体)", rel:"エリスとクロヨンの子", d:"突然変異の白い個体。武闘会で複数回好成績を残す。", first:22},
+{g:"wolf", name:"マサユキ", role:"ハーレム狼", rel:"イリスとクロニの子", d:"パートナーを多数持つことから「ハーレム狼」と呼ばれる。", first:27},
+{g:"wolf", name:"兄貴", role:"フェンリルの夫", rel:"迷子の子犬(フェンリル)を保護し夫婦に", d:"拾った子犬に懐かれ、そのままパートナーにした個体。", first:171},
+{g:"wolf", name:"フェンリル(子犬)", role:"フェンリル種", rel:"兄貴の妻", d:"迷子として保護された特殊種。成長して兄貴の子を生む。", first:171},
+{g:"wolf", name:"新入り", role:"名もなきインフェルノウルフ", rel:"クロの群れに合流", d:"結界の穴を越えて外へ出てしまい、誤って魔王を殴り倒した個体。以後クロの群れの新入りとして保護される。", first:680},
+
+/* ---------------- spider ---------------- */
+{g:"spider", name:"ザブトン", role:"イリーガルデーモンスパイダー・村の衣装担当", rel:"多数の子を持つ", d:"畳2畳ほどの巨大な蜘蛛。糸で村の衣装・布・カーテンすべてを製作する縫製職人。周辺警戒も担う。", first:15},
+{g:"spider", name:"マクラ", role:"ザブトンの子・第一回武闘会優勝者", rel:"ザブトンの子の一匹", d:"畳二畳サイズまで成長した個体。糸を使った戦法で天使族にも「天敵」と恐れられる強さ。", first:17},
+{g:"spider", name:"アラコ", role:"アラクネ", rel:"デーモンスパイダーの進化個体", d:"上半身が人間女性、下半身が蜘蛛。ダンジョン管理や地竜の育成を担う。", first:272},
+{g:"spider", name:"レッドアーマー・ホワイトアーマー", role:"アーマースパイダー", rel:"デーモンスパイダーの亜種", d:"屋敷の門番役として定着した個体。", first:465},
+{g:"spider", name:"フォーオ", role:"フォレストガーディアン", rel:"ザブトンの子", d:"北の森に定住し、1000年前からの守り神と誤認されるまでに成長した個体。「混ぜ物」を単独撃退する強さを見せる。", first:349},
+
+/* ---------------- vampire ---------------- */
+{g:"vampire", name:"始祖さん(ヴァルグライフ／ルマニ＝ブラン＝トランシルヴァー)", role:"吸血鬼の始祖・コーリン教宗主", rel:"ルー・フローラの祖父、ヴェルサの夫", d:"約4000年生きる長命者。コーリン教最大の武力組織を率いる裏の顔を持ち、村の様々な陰謀・危機に対処する。", first:117},
+{g:"vampire", name:"ヴェルサ＝ミラ＝トランシルヴァー", role:"古の悪魔族・軍団長《レガトゥス・レギオニス》の一人", rel:"始祖さんの妻", d:"《知識》の悪魔。魔物・魔獣の種族名付けを担う。BL作家としての裏の顔を持ち、極度の引きこもり。", first:244},
+
+/* ---------------- angel ---------------- */
+{g:"angel", name:"マルビット", role:"天使族の長", rel:"キアービットの母", d:"とぼけた印象だが決断力は高い。クロヨンとチェス仲間。ガーレット王国では偽名で活動していた。", first:26},
+{g:"angel", name:"ルィンシァ", role:"天使族の補佐長", rel:"ティアの母", d:"娘との会話は苦手だが翼での会話は得意。孫のティゼル・オーロラを溺愛。", first:117},
+{g:"angel", name:"キアービット", role:"元ガーレット王国巫女", rel:"マルビットの娘", d:"当初はティアと敵対したが和解。トラインへの想いを隠しつつ王都で補佐役を務める。", first:124},
+{g:"angel", name:"ラズマリア", role:"マルビットの補佐", rel:"グランマリアの母", d:"「穏健派」と評されるが実際はスアルロウと殴り合った過去を持つ武闘派。", first:465},
+{g:"angel", name:"スアルロウ", role:"ロヒエール(過激)派筆頭", rel:"スアルリウ・スアルコウの母", d:"元・天使族最強。村長を神と信じ込み一時暴走したが和解し定住。", first:489},
+{g:"angel", name:"レギンレイヴ", role:"天使族の長老格", rel:"村長の護衛", d:"最長老。睡眠が何年にも及ぶことがあったが村では普通に。ウルザの護衛担当としても活躍。", first:581},
+
+/* ---------------- elf ---------------- */
+{g:"elf", name:"リゼ・ラファ", role:"ハイエルフ・村長の妻", rel:"リアの血族、それぞれリグル・ラテの母", d:"リアと共に村の中核を担うハイエルフ。", first:28},
+{g:"elf", name:"ヤー", role:"山エルフ代表", rel:"村の技術開発リーダー", d:"焼き物・水車・ゴーレム・自動販売機・飛行船など、村のあらゆる工作技術を牽引する発明家気質。", first:76},
+{g:"elf", name:"リグネ", role:"ハイエルフ・リフ氏族戦士長", rel:"リアの実母", d:"100年以上娘を探し続けていた武闘派の教官。学園でハイエルフたちを鍛える。", first:410},
+
+/* ---------------- oni ---------------- */
+{g:"oni", name:"ラムリアス", role:"鬼人族メイド・獣人族世話係", rel:"ラムナの母", d:"鬼人族メイドのナンバーツー。獣人族の世話役を専任で務める。", first:50},
+{g:"oni", name:"アズキ", role:"鬼人族メイドの一人", rel:"アンの部下", d:"", first:473},
+
+/* ---------------- lizard ---------------- */
+{g:"lizard", name:"ナーフ", role:"リザードマン・ミノタウロス世話役", rel:"ダガの仲間", d:"ミノタウロス族移住の窓口となった情報源。", first:117},
+
+/* ---------------- beast ---------------- */
+{g:"beast", name:"ガルフ", role:"獣人族最強の戦士・武神", rel:"セナの一族、村長の護衛", d:"ハウリン村最強の戦士。単独で武闘会に出場し優勝するほどの実力。妻子を連れて移住し村長護衛の常連となる。", first:46},
+{g:"beast", name:"ガット(獣人族・鍛冶リーダー)", role:"セナの兄・大樹の村鍛冶リーダー", rel:"妻ナーシィ、娘ナート", d:"ハウリン村長の息子。鉱山咳による離縁誤解を経て正式にナーシィと再婚、村の鍛冶場を主導。", first:136},
+{g:"beast", name:"ナーシィ・ナート", role:"ガットの妻と娘", rel:"人間とのハーフ家族", d:"ナートは村の子供たちのまとめ役として活躍。", first:137},
+{g:"beast", name:"マム", role:"獣人族・一村世話役", rel:"ニュニュダフネ世話役", d:"", first:117},
+
+/* ---------------- dragon ---------------- */
+{g:"dragon", name:"ドース", role:"竜王", rel:"ライメイレンの夫、ハクレン・スイレン・ドライム・セキレン・ドマイムの父", d:"ドラゴン一族の長。孫を溺愛し、後半では大ラナノーンに何度も挑んで返り討ちに遭う定番コンビを組む。", first:68},
+{g:"dragon", name:"ライメイレン", role:"台風竜", rel:"ドースの妻", d:"ヒイチロウを溺愛する「おばあちゃんっ子」化の元凶。ヒカル・ヒミコの世話も独占する。", first:68},
+{g:"dragon", name:"ドライム", role:"門番竜", rel:"グラッファルーンの夫、ラスティの父", d:"南の山に巣を作った竜。人見知りだが村の常連客として頻繁に訪れる。ダイコン愛好家。", first:45},
+{g:"dragon", name:"グラッファルーン", role:"白竜姫", rel:"ドライムの妻", d:"ラスティを溺愛する母。ザブトンとは古い知り合い。", first:57},
+{g:"dragon", name:"スイレン・マークスベルガーク・ヘルゼルナーク", role:"魔竜・悪竜・暴竜", rel:"母娘夫婦一家", d:"ヘルゼルナークはハクレンの息子ヒカルに運命を感じている。", first:68},
+{g:"dragon", name:"セキレン・クォルン", role:"火炎竜とその夫", rel:"ドースの娘とその配偶者", d:"村長が縁を取り持った夫婦。", first:68},
+{g:"dragon", name:"ドマイム・クォン", role:"ドースの息子とその妻", rel:"夫婦", d:"村長の助言(希望を紙に書いて交換)で結ばれた。物語後半で夫婦の悩みを兄ドライムに相談する。", first:114},
+{g:"dragon", name:"ギラル・グーロンデ", role:"暗黒竜とその妻(神の敵・多首竜)", rel:"グラルの父母", d:"グーロンデは世界樹を一度燃やした過去を持つが、世界樹の葉で完治し以後は村に定住。夫婦喧嘩がコミカルに描かれる。", first:158},
+{g:"dragon", name:"グラル", role:"暗黒竜の娘", rel:"ヒイチロウに想いを寄せる", d:"ウルザの相棒的存在として育つ。", first:233},
+{g:"dragon", name:"メットーラ(ダンダジィ)", role:"混代竜族最強・氷竜族", rel:"ギィーネルの妻、トーシーラの姉", d:"村長の子供たちの世話役筆頭として長く活動。正体を隠していたが後に判明、幼馴染のギィーネルと結婚。", first:526},
+{g:"dragon", name:"ギィーネル", role:"六竜神国の王", rel:"メットーラの夫", d:"幻惑の迷宮の主だった竜。メットーラに見つけ出され結婚、六竜神国初代国王に。", first:866},
+{g:"dragon", name:"オージェス・ハイフリーグータ・キハトロイ", role:"混代竜族三人組(野球選手)", rel:"六竜神国運営陣の一員", d:"魔王国で野球助っ人として活躍する炎竜・風竜・大地竜。", first:435},
+{g:"dragon", name:"ラナノーン(大)／ラナさん／ラナウィ", role:"神代竜族・竜王ギグラントの妻", rel:"ライメイレンの祖母", d:"物語後半最大の新規キャラクター。長い眠りから世界樹の葉で強制覚醒。「挑んだ者にしか名を教えない」というルールに縛られたコミカルな性格で、ドースとギラルに何度も挑まれては瞬殺する。もう一つの人格「ラナウィ」も持つ。", first:1025},
+
+/* ---------------- demon ---------------- */
+{g:"demon", name:"グッチ", role:"ドライムの執事・権能《英雄》", rel:"ドライムの補佐", d:"ドライムの知恵袋として長く活躍する悪魔族の男。", first:45},
+{g:"demon", name:"ブルガ・スティファノ", role:"ラスティの侍女・権能《慈愛》《恩愛》", rel:"ラスティ・ククルカンの世話係", d:"ラスティの使用人として村に定住した悪魔族の女性二人。", first:61},
+{g:"demon", name:"プラーダ", role:"プラーダ美術館館長・権能《金貨》", rel:"元グッチの部下", d:"美術品を収集する悪魔。五村に開いた美術館の館長として、書類仕事や交渉に予想外の才能を発揮する。", first:630},
+{g:"demon", name:"クリム", role:"新生の悪魔・権能《希望》", rel:"【絶望】の娘、ヨルの養女", d:"悪魔像に宿った魂が多目的人型機動重機ジークフリートを吸収し実体化した5歳児。村の子供たちと対等に交流する。", first:956},
+{g:"demon", name:"【絶望】と呼ばれた太古の悪魔", role:"美術品を守る悪魔", rel:"クリムの父", d:"数千年生きた古い悪魔で、村長作の像に強引に宿されて復活。だが権能ゆえ動くと自らを損壊してしまう矛盾を抱える。", first:955},
+{g:"demon", name:"カティ・ルディオ・シャルネ", role:"プラーダ美術館スタッフ", rel:"箱・音・文字それぞれに執着する悪魔", d:"美術館運営を支える個性豊かな三人。", first:947},
+{g:"demon", name:"エルメ・コリー・ハーキン", role:"ヴェルサのメイド", rel:"ヴェルサの側近", d:"二千年前から仕えるエルメを筆頭とするメイド集団。", first:581},
+{g:"demon", name:"ベトン", role:"古い悪魔族・権能《病魔》", rel:"ジョローの商隊の一員", d:"正体を隠して他国の商隊に潜伏していたことが発覚。罰として野球観客席の売り子に。", first:720},
+
+/* ---------------- mercury ---------------- */
+{g:"mercury", name:"ベル", role:"フォーグマ一家のリーダー・太陽城城主補佐筆頭", rel:"ヨル・フタ・ミヨ・ヒー・ロク・ナナ・ゴウ・トウらの姉役", d:"王族守護者計画で生まれた人工生命体。四村(太陽城)の運行管理を統括する常識人。", first:44},
+{g:"mercury", name:"アサ", role:"執事・城主専属執事", rel:"ウルザの護衛と補佐", d:"初代・温泉地転移門の管理人。長くウルザの護衛役を務める。", first:44},
+{g:"mercury", name:"ヨル", role:"兵装管理主任", rel:"クリムの養育者", d:"武器・兵器への異常な執着を見せるトラブルメーカー。多目的人型機動重機を発見・整備し、クリムの誕生後は養育に専念する。", first:598},
+{g:"mercury", name:"フタ", role:"航海長・転移門管理", rel:"", d:"個性がないことに悩み一人称やキャラ付けを模索している。", first:44},
+{g:"mercury", name:"ミヨ", role:"会計長・シャシャートの街代官補佐", rel:"", d:"幼女メイドの姿だが優秀すぎて無茶振りされがち。裏で美容品・磁鉄鉱事業を進めていたことが発覚することも。", first:60},
+{g:"mercury", name:"ゴウ", role:"操舵長・四村城主補佐", rel:"ベルの相棒", d:"燃料メーター(保温石)が満タンでないと落ち着かない性分。", first:44},
+{g:"mercury", name:"ロク", role:"公務秘書・五村文官筆頭", rel:"", d:"影が薄いことを気にしている実務派。", first:304},
+{g:"mercury", name:"ナナ", role:"情報長・五村情報収集官", rel:"", d:"変装して各所に潜り込む密偵。地味な容姿ゆえ何度も誤認される。", first:304},
+{g:"mercury", name:"トウ", role:"万能船船長", rel:"", d:"万能船をかなり気に入っている。後に新造の飛行船も担当。", first:554},
+{g:"mercury", name:"イレ", role:"通信長・撮影隊ディレクター", rel:"", d:"夏祭りの実況・中継システムを一から構築した放送技師。", first:216},
+{g:"mercury", name:"エイプリー・メイ・カレン", role:"キッシンリー一族", rel:"夫婦とその娘", d:"王国執政官計画の生き残り。フォーグマ一族とは歴史的な宿敵関係にあったが、労働刑を経てシャシャートの街で働くことに。", first:929},
+
+/* ---------------- kitsune ---------------- */
+{g:"kitsune", name:"ヨウコ", role:"九尾狐・五村村長代行", rel:"ヒトエの母", d:"空腹で村に迷い込み、村長との対決に完敗して以来村に居着く。以後五村の統治を一手に担う実力者。", first:276},
+{g:"kitsune", name:"ヒトエ", role:"九尾狐・ヨウコの娘", rel:"", d:"見た目は幼女だが実際は百年以上生きている。", first:277},
+{g:"kitsune", name:"コン", role:"銀狐族の族長", rel:"キツ・ブチらを率いる", d:"一族92人を救うため村長に雇用を願うが拒絶され、【万能農具】に貫かれ重傷を負う。以後神社管理を任され保護エリアに移住。", first:761},
+
+/* ---------------- pet ---------------- */
+{g:"pet", name:"ライギエル", role:"父猫・元落神?", rel:"ジュエルの夫", d:"村の癒し担当。実は太古の魔神ではないかという伏線が示唆される。", first:158},
+{g:"pet", name:"ジュエル", role:"宝石猫", rel:"ライギエルの妻", d:"違法取引から保護された猫。8匹の子猫の母。", first:233},
+{g:"pet", name:"ミエル・ラエル・ウエル・ガエル", role:"姉猫四姉妹", rel:"ライギエルとジュエルの娘", d:"正式名はミカエル・ラファエル・ウリエル・ガブリエル。", first:262},
+{g:"pet", name:"アリエル・ハニエル・ゼルエル・サマエル", role:"子猫四姉妹", rel:"姉猫たちの妹", d:"サマエルは魔王に特に懐いている。", first:358},
+{g:"pet", name:"ソウゲツ", role:"虎の聖獣サンゲツの子孫", rel:"姉猫たちのお気に入り", d:"五村で暴れていたところを魔王から贈られた虎。聖獣サンゲツと対面し名を継承。", first:594},
+{g:"pet", name:"アイギス", role:"フェニックスの雛", rel:"鷲と仲良し", d:"太った鳥のような見た目に反し、火を纏う練習をするなど成長を続ける。ハーピーたちのアイドル。", first:330},
+{g:"pet", name:"オル(オルトロス)", role:"双頭の犬", rel:"グーロンデに懐く", d:"五村の下水道で発見された子犬。自分より弱い相手を探して勝負を挑み続けるが全敗中。", first:583},
+
+/* ---------------- spirit ---------------- */
+{g:"spirit", name:"妖精女王", role:"妖精たちの女王", rel:"", d:"人間の姿をした大人サイズの妖精。子供の守護者として崇められる一方、甘い物への執着が強い。真の姿は蔓の玉座に座る女王。", first:341},
+{g:"spirit", name:"氷の魔物(アイス)", role:"氷の精霊配下・ウルザの部下", rel:"", d:"英雄女王ウルブラーザの元部下。主の死を知らず暴れかけるが、大樹の村の強者に驚き逃走した末にウルザに保護される。", first:860},
+{g:"spirit", name:"月の神", role:"神", rel:"チワワ(セリオン)を飼う", d:"世界の危機回避の裏側や、麻雀好きの神代竜族との交流を語る閑話の語り手。", first:913},
+{g:"spirit", name:"ニーズ", role:"妖蛇・蛇の神の使い", rel:"", d:"世界樹への神託(奉納舞)のため大樹の村に連行され、村の規格外の強さに恐怖する。以後五村で働く。", first:407},
+
+/* ---------------- tool ---------------- */
+{g:"tool", name:"意思を持つ箱たち(1〜22番、4051番など)", role:"インテリジェンス・ボックス", rel:"", d:"死の森で発見された、約2500年前に落下した15個の箱。各々が個性的な中身と性格を持つ。", first:656},
+{g:"tool", name:"フウマ＝カトウ", role:"知恵を持つ道具・人型人形", rel:"ザブトンの子18匹が内部搭乗して操作", d:"アルフレートの護衛用に作られた人型人形。ダガと互角以上の戦闘力を披露する。", first:991},
+{g:"tool", name:"クエンタン", role:"知恵を持つ剣《インテリジェンス・ソード》", rel:"死霊魔導師の相棒", d:"かつて怨念炉の管理をしていた意思ある剣。", first:503},
+{g:"tool", name:"多目的人型機動重機(ジークフリート他)", role:"アーティ・ホース", rel:"クリムが一号機を吸収", d:"古代の重機。二号機以降はベンゼ・ポカ・ラーロック・ハナサカと命名され武闘会の競技にも使われる。", first:940},
+
+/* ---------------- gomura ---------------- */
+{g:"gomura", name:"ピリカ＝ウィンアップ", role:"剣聖・五村警備主任", rel:"ガルフに弟子入り", d:"十年間道場に縛られていた人族最強剣士。弟子300人の救出作戦を経て五村に移住。", first:291},
+{g:"gomura", name:"樹王・弓王", role:"五村の外交官エルフ", rel:"", d:"ゴーンの森・ガレツの森それぞれのエルフをまとめ、五村に服属させる。", first:316},
+{g:"gomura", name:"フアノ", role:"五村鍛冶・ドワーフ総まとめ役", rel:"", d:"牢屋送りになった部下ドワーフの引き取りをきっかけに五村に定着。", first:314},
+{g:"gomura", name:"キネスタ", role:"元エルフ帝国皇女・クロトユキ店長代理", rel:"", d:"人質として五村に送られたが、店の経営に志願し店長代理に。", first:377},
+{g:"gomura", name:"チェルシー", role:"聖騎士・真勇者", rel:"ピリカの弟子", d:"始祖さんが暴走防止のため同行させた本物の勇者。女性であることを隠していた。", first:396},
+{g:"gomura", name:"デルゼン製紙・印刷代表 エライザ", role:"文官娘衆・デルゼン代表代行", rel:"ピケットエンド子爵家の令嬢", d:"ヴェルサの製紙・印刷事業を継承・拡大。五村の壁新聞企画も統括する。", first:987},
+
+/* ---------------- maou ---------------- */
+{g:"maou", name:"魔王ガルガルド", role:"ガルガルド魔王国の魔王", rel:"ユーリの父", d:"竜王ドースや始祖さんの存在に怯えつつも、村との臣従関係(税一割)を受け入れた。", first:37},
+{g:"maou", name:"ビーゼル＝クライム＝クローム", role:"四天王(外交担当)・伯爵", rel:"フラウの父", d:"苦労人として村と魔王国の橋渡しを続ける外交官。", first:44},
+{g:"maou", name:"ランダン", role:"四天王筆頭(内政担当)", rel:"", d:"", first:52},
+{g:"maou", name:"グラッツ＝ブリトア", role:"四天王(軍事担当)・侯爵", rel:"ロナーナの夫", d:"ミノタウロス族。ロナーナへの一目惚れから求婚し結婚する。", first:113},
+{g:"maou", name:"ホウ＝レグ", role:"四天王(財務担当)", rel:"変装名コネギット、シールの妻", d:"貴族学園に変装入学し、シールと結婚する変わり者。", first:224},
+{g:"maou", name:"ユーリ", role:"魔王の娘・王姫", rel:"", d:"世間知らずな一面があったが村での生活を経て成長。五村赴任後も大樹の村で寝泊まりすることが多い。", first:72},
+{g:"maou", name:"マイケル＝ゴロウン", role:"ゴロウン商会会頭", rel:"マーロンの父", d:"村との取引を長く続ける常識人の商人。", first:61},
+{g:"maou", name:"マーロン", role:"ゴロウン商会次期会頭", rel:"マイケルの息子", d:"", first:59},
+{g:"maou", name:"イフルス", role:"シャシャートの街の代官", rel:"ギルスパークの父", d:"", first:216},
+
+/* ---------------- faraway ---------------- */
+{g:"faraway", name:"フーシュ", role:"コーリン教大司祭", rel:"ミケルの母", d:"「悪辣フーシュ」の異名を持つ大司祭。始祖さんの知人で、アルフレートの後見人も務める。", first:129},
+{g:"faraway", name:"オブライエン", role:"コーリン教神官戦士長", rel:"", d:"【弱者の目】を持つ戦士。村の規格外の強さに戦慄した経験からウルザを慕う。", first:165},
+{g:"faraway", name:"ミケル", role:"コーリン教団員", rel:"フーシュの息子", d:"アルフレートの案内役として奮闘するコミックリリーフ的存在。", first:1008},
+{g:"faraway", name:"征服王(ジドエン王国王)", role:"人間の国の王", rel:"", d:"ティゼルの介入で最終的にケイルランド地域連合王国の初代統一王に選出される。", first:914},
+{g:"faraway", name:"パンナコア(パンナ)＝シルバーシルク", role:"シルバーシルク伯爵家長女", rel:"", d:"アルフレートに家業を救われた恩人。優秀な計算力・推理力で王子たちの実務を仕切る。", first:1018},
+];
+
+/* ---------------- 名前のない集団・種族 ---------------- */
+const UNNAMED = [
+  "フルハルト王国／魔王と交戦を続ける人間の国家",
+  "コーリン教団の神官・武力集団",
+  "北のダンジョンの巨人族／南のダンジョンのラミア族／東のダンジョンのゴロック族",
+  "森の四強(グラップラーベア・ブラッディバイパー・インフェルノウルフ・デーモンスパイダー)",
+  "海の種族(人魚・サハギン・海リザードマン)",
+  "五村議員・商人・冒険者団(数百〜数千人規模)",
+  "ビッグルーフ・シャシャートの従業員たち(一期〜三期組、計1500人超)",
+  "魔王国正規軍・近衛軍・第一〜第二十九軍団",
+  "空飛ぶクジラとその護衛の空飛ぶサメの群れ",
+  "ジョローの商隊(他国潜入部隊六十人)",
+  "七人の腐人(ヴェルサらのBL愛好サークル)と対抗する禁書撲滅チーム",
+  "ケイルランド地域の各領王たち",
+  "混代竜族の野球助っ人チーム以外の名もなき六竜神国運営陣",
+  "五村の職人・生産工場ワーカーたち",
+  "王都・魔王国貴族学園の生徒・講師たち",
+];
+
+/* ============ レンダリング ============ */
+const groupsEl = document.getElementById("sections");
+const tocEl = document.getElementById("toc");
+const countEl = document.getElementById("count");
+const noResultEl = document.getElementById("noresult");
+
+function groupData() {
+  const map = new Map();
+  GROUPS.forEach(g => map.set(g.id, []));
+  DATA.forEach(d => { if (map.has(d.g)) map.get(d.g).push(d); });
+  return map;
+}
+const byGroup = groupData();
+
+GROUPS.forEach((g, idx) => {
+  const items = byGroup.get(g.id) || [];
+  if (!items.length) return;
+
+  const a = document.createElement("a");
+  a.href = `#sec-${g.id}`;
+  a.textContent = `${g.name} (${items.length})`;
+  tocEl.appendChild(a);
+
+  const section = document.createElement("section");
+  section.className = "grp";
+  section.id = `sec-${g.id}`;
+  const openAttr = idx < 4 ? "open" : "";
+  section.innerHTML = `
+    <details class="grp-body" ${openAttr}>
+      <summary class="grp-head">
+        <div class="left">
+          <span class="swatch" style="background:${g.color}"></span>
+          <h2>${g.name}</h2>
+        </div>
+        <div class="left">
+          <span class="ct">${items.length}件</span>
+          <span class="chev">▸</span>
+        </div>
+      </summary>
+      <p class="grp-desc">${g.desc}</p>
+      <div class="cards"></div>
+    </details>
+  `;
+  const cardsEl = section.querySelector(".cards");
+  items.forEach(d => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.dataset.search = (d.name + " " + d.role + " " + (d.rel||"") + " " + (d.d||"")).toLowerCase();
+    card.innerHTML = `
+      <span class="tag" style="background:${g.color}"></span>
+      <h3>${d.name}</h3>
+      <div class="role">${d.role}</div>
+      ${d.d ? `<p>${d.d}</p>` : ""}
+      ${d.rel ? `<div class="rel">${d.rel}</div>` : ""}
+    `;
+    cardsEl.appendChild(card);
+  });
+  groupsEl.appendChild(section);
+});
+
+const unnamedList = document.getElementById("unnamed-list");
+UNNAMED.forEach(t => {
+  const li = document.createElement("li");
+  li.textContent = t;
+  unnamedList.appendChild(li);
+});
+
+/* ---- search ---- */
+const searchInput = document.getElementById("search");
+function updateCount() {
+  const total = document.querySelectorAll(".card").length;
+  const visible = document.querySelectorAll(".card:not(.hidden)").length;
+  countEl.textContent = `${visible} / ${total} 人`;
+}
+function applyFilter() {
+  const q = searchInput.value.trim().toLowerCase();
+  let anyVisible = false;
+  document.querySelectorAll("section.grp").forEach(section => {
+    let sectionHasVisible = false;
+    section.querySelectorAll(".card").forEach(card => {
+      const match = !q || card.dataset.search.includes(q);
+      card.classList.toggle("hidden", !match);
+      if (match) { sectionHasVisible = true; anyVisible = true; }
+    });
+    section.style.display = sectionHasVisible ? "" : "none";
+    if (q && sectionHasVisible) section.querySelector("details").open = true;
+  });
+  noResultEl.classList.toggle("show", !anyVisible);
+  updateCount();
+}
+searchInput.addEventListener("input", applyFilter);
+updateCount();
+</script>
+</body>
+</html>
