@@ -1,3 +1,6 @@
 # 生成物(index.htmlなど)の元になる素材置き場。
 # 著作物の原文などが含まれるため、コミット・公開しない。
 /nonbiri-nouka-characters/sources/
+
+# 公開停止したページのローカル控え(ARCHIVED.md参照)。今後はコミット対象外。
+/archive/
