@@ -13,3 +13,5 @@
 | テスト自動化エンジニアのスキルロードマップ | `test-automation-skill-roadmap/` | https://sazanamix.github.io/github-pages/test-automation-skill-roadmap/ | 2026-07-24 |
 | Claude Code 30日ロードマップ | `claude-code-learning-guide/` | https://sazanamix.github.io/github-pages/claude-code-learning-guide/ | 2026-07-24 |
 | 2026 MLB 順位推移 | `mlb-2026-standings/` | https://sazanamix.github.io/github-pages/mlb-2026-standings/ | 2026-07-18 |
+| 日本のソフトウェアテスト書籍 年代・傾向マップ | `test-book-trends/` | https://sazanamix.github.io/github-pages/test-book-trends/ | 2026-07-27 |
+| 日本のゲームメーカー規模マップ | `game-maker-scale-map/` | https://sazanamix.github.io/github-pages/game-maker-scale-map/ | 2026-07-27 |
